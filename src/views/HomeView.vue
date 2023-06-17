@@ -11,23 +11,14 @@
         class="md:px-10 px-5 py-10 flex flex-col gap-6"
       >
         <ul class="w-full">
-          <li
+          <FormInput
             v-for="(inputField, i) in inputFields"
             :key="i"
-            class="w-full relative"
-          >
-            <Field
-              :name="inputField.name"
-              :type="inputField.type"
-              :rules="isRequired"
-              class="border border-black rounded-md bg-transparent px-4 py-3 text-lg w-full block text-black mb-10"
-              :placeholder="inputField.placeholder"
-            />
-            <ErrorMessage
-              :name="inputField.name"
-              class="text-red-600 absolute -bottom-8"
-            />
-          </li>
+            :name="inputField.name"
+            :type="inputField.type"
+            :rules="inputField.rules"
+            :placeholder="inputField.placeholder"
+          />
         </ul>
         <button
           type="submit"
@@ -41,18 +32,26 @@
 </template>
 
 <script setup>
-import { Form, Field, ErrorMessage } from "vee-validate";
+import { Form } from "vee-validate";
 import { ref } from "vue";
+import FormInput from "../components/ui/FormInput.vue";
 
 const loginFields = [
-  { name: "username", type: "text", placeholder: "Input Your Username" },
-  { name: "password", type: "password", placeholder: "Input Your Password" },
+  {
+    name: "username",
+    type: "text",
+    placeholder: "Input Your Username",
+    rules: "required|min:3",
+  },
+  {
+    name: "password",
+    type: "password",
+    placeholder: "Input Your Password",
+    rules: "required|min:8",
+  },
 ];
 
 const inputFields = ref(loginFields);
-
-const isRequired = (value) =>
-  value && value.trim() ? true : "This field is required";
 
 const handleSubmit = (values) => {
   console.log(values);
