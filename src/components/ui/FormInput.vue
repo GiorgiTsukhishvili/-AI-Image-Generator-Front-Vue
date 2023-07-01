@@ -24,8 +24,12 @@ const props = defineProps({
   placeholder: String,
 });
 
-const labelText = computed(
-  () =>
-    props.name[0].toLocaleUpperCase() + props.name.slice(1, props.name.length)
+const labelText = computed(() =>
+  props.name
+    .split("_")
+    .map((el) =>
+      el.length !== 0 ? el[0].toLocaleUpperCase() + el.slice(1, el.length) : el
+    )
+    .join(" ")
 );
 </script>

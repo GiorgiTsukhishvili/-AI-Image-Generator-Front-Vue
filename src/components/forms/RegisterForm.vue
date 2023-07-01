@@ -69,6 +69,12 @@ const registerFields = [
     rules: "required|min:3",
   },
   {
+    name: "email",
+    type: "email",
+    placeholder: "Input Your email",
+    rules: "required|min:5|email",
+  },
+  {
     name: "password",
     type: "password",
     placeholder: "Input Your Password",
