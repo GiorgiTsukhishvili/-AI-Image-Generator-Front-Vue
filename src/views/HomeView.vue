@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-neutral-100 h-screen z-0">
+  <div class="bg-neutral-100 h-screen">
     <WrapperComponent> </WrapperComponent>
   </div>
 </template>
