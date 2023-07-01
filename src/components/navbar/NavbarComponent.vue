@@ -14,6 +14,7 @@
               Login
             </button>
             <button
+              @click="() => changeModal('register')"
               class="text-white bg-blue-600 border border-blue-600 rounded-md text-lg font-bold px-4 py-1"
             >
               Sign Up
@@ -27,11 +28,15 @@
     v-if="whichModalOpen === 'login'"
     @changeModal="(modalState) => changeModal(modalState)"
   />
+  <RegisterForm
+    v-if="whichModalOpen === 'register'"
+    @changeModal="(modalState) => changeModal(modalState)"
+  />
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router";
-import { LoginForm, WrapperComponent } from "@/components";
+import { LoginForm, WrapperComponent, RegisterForm } from "@/components";
 import { ref, watchEffect } from "vue";
 
 const whichModalOpen = ref("");
