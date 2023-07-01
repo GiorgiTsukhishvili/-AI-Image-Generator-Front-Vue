@@ -9,6 +9,7 @@
           <div class="flex items-center gap-4">
             <button
               class="bg-none text-blue-600 border border-blue-600 rounded-md text-lg font-bold px-4 py-1"
+              @click="() => changeModal('login')"
             >
               Login
             </button>
@@ -22,13 +23,26 @@
       </div>
     </WrapperComponent>
   </div>
-  <LoginForm v-if="whichModalOpen === 'login'" />
+  <LoginForm
+    v-if="whichModalOpen === 'login'"
+    @changeModal="(modalState) => changeModal(modalState)"
+  />
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router";
 import { LoginForm, WrapperComponent } from "@/components";
-import { ref } from "vue";
+import { ref, watchEffect } from "vue";
 
 const whichModalOpen = ref("");
+
+const changeModal = (modal) => (whichModalOpen.value = modal);
+
+watchEffect(() => {
+  if (whichModalOpen.value !== "") {
+    document.body.style.overflow = "hidden";
+  } else {
+    document.body.style.overflow = "unset";
+  }
+});
 </script>
