@@ -32,7 +32,7 @@
 <script setup>
 import { Form } from "vee-validate";
 import { ref } from "vue";
-import FormInput from "../components/ui/FormInput.vue";
+import { FormInput } from "@/components";
 
 const loginFields = [
   {

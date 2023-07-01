@@ -22,9 +22,13 @@
       </div>
     </WrapperComponent>
   </div>
+  <LoginForm v-if="whichModalOpen === 'login'" />
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router";
-import WrapperComponent from "../ui/WrapperComponent.vue";
+import { LoginForm, WrapperComponent } from "@/components";
+import { ref } from "vue";
+
+const whichModalOpen = ref("");
 </script>

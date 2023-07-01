@@ -5,5 +5,5 @@
 </template>
 
 <script setup>
-import WrapperComponent from "../components/ui/WrapperComponent.vue";
+import { WrapperComponent } from "@/components";
 </script>
