@@ -32,11 +32,20 @@
     v-if="whichModalOpen === 'register'"
     @changeModal="(modalState) => changeModal(modalState)"
   />
+  <ForgotPasswordForm
+    v-if="whichModalOpen === 'forgot-password'"
+    @changeModal="(modalState) => changeModal(modalState)"
+  />
 </template>
 
 <script setup>
 import { RouterLink } from "vue-router";
-import { LoginForm, WrapperComponent, RegisterForm } from "@/components";
+import {
+  LoginForm,
+  WrapperComponent,
+  RegisterForm,
+  ForgotPasswordForm,
+} from "@/components";
 import { ref, watchEffect } from "vue";
 
 const whichModalOpen = ref("");

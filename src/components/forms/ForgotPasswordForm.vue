@@ -1,13 +1,13 @@
 <template>
   <div
-    class="fixed top-0 left-0 w-screen min-h-screen flex justify-center scrollbar-hide items-center overflow-scroll"
+    class="fixed top-0 left-0 w-screen overflow-scroll scrollbar-hide min-h-screen flex justify-center items-center"
   >
     <div
       class="bg-black bg-opacity-20 fixed top-0 left-0 w-screen min-h-screen"
       @click="emits('changeModal', '')"
     />
     <div
-      class="bg-white scrollbar-hide rounded-lg shadow-2xl md:max-w-[600px] md:w-full pb-10 h-screen w-screen md:min-h-fit overflow-scroll relative md:h-auto z-10"
+      class="bg-white rounded-lg scrollbar-hide shadow-2xl md:max-w-[600px] md:w-full min-h-screen w-screen md:min-h-fit md:h-auto z-10 overflow-scroll"
     >
       <div
         class="absolute top-10 right-10 md:hidden"
@@ -16,18 +16,18 @@
         <CloseIcon />
       </div>
       <div class="flex items-center gap-10 w-full justify-center pt-10">
-        <button
-          class="text-2xl text-gray-700 pb-1"
-          @click="emits('changeModal', 'login')"
-        >
+        <button class="text-2xl text-gray-700 border-b-4 border-b-gray-700">
           Login
         </button>
-        <button class="text-2xl text-gray-700 border-b-4 border-b-gray-700">
+        <button
+          class="text-2xl text-gray-700 pb-1"
+          @click="emits('changeModal', 'register')"
+        >
           Sign Up
         </button>
       </div>
       <h1 class="md:px-10 px-5 pt-16 md:text-4xl text-2xl font-bold">
-        Register Account
+        Input your Email
       </h1>
       <Form
         @submit="handleSubmit"
@@ -61,34 +61,16 @@ import { FormInput, CloseIcon } from "@/components";
 
 const emits = defineEmits(["changeModal"]);
 
-const registerFields = [
-  {
-    name: "username",
-    type: "text",
-    placeholder: "Input Your Username",
-    rules: "required|min:3",
-  },
+const ForgotPasswordFields = [
   {
     name: "email",
     type: "email",
     placeholder: "Input Your email",
     rules: "required|min:5|email",
   },
-  {
-    name: "password",
-    type: "password",
-    placeholder: "Input Your Password",
-    rules: "required|min:8",
-  },
-  {
-    name: "password_confirmation",
-    type: "password",
-    placeholder: "Input Repeat Password",
-    rules: "required|min:8",
-  },
 ];
 
-const inputFields = ref(registerFields);
+const inputFields = ref(ForgotPasswordFields);
 
 const handleSubmit = (values) => {
   console.log(values);

@@ -26,7 +26,7 @@
           Sign Up
         </button>
       </div>
-      <h1 class="px-10 pt-16 md:text-4xl text-2xl font-bold">
+      <h1 class="md:px-10 px-5 pt-16 md:text-4xl text-2xl font-bold">
         Login Into Account
       </h1>
       <Form
@@ -42,10 +42,23 @@
             :rules="inputField.rules"
             :placeholder="inputField.placeholder"
           />
-          <div class="flex gap-2 items-center">
-            <label for="remember">Remember me</label>
-            <Field type="checkbox" name="remember" id="remember" value="true" />
-          </div>
+          <li class="flex justify-between items-center">
+            <div class="flex gap-2 items-center">
+              <label for="remember">Remember me</label>
+              <Field
+                type="checkbox"
+                name="remember"
+                id="remember"
+                value="true"
+              />
+            </div>
+            <button
+              class="text-base md:text-lg"
+              @click="emits('changeModal', 'forgot-password')"
+            >
+              Forgot Password?
+            </button>
+          </li>
         </ul>
         <button
           type="submit"
