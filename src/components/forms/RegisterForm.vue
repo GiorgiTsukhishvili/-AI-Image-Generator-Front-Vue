@@ -1,13 +1,13 @@
 <template>
   <div
-    class="fixed top-0 left-0 w-screen h-screen flex justify-center items-center"
+    class="fixed top-0 left-0 w-screen min-h-screen flex justify-center scrollbar-hide items-center overflow-scroll"
   >
     <div
-      class="bg-black bg-opacity-20 fixed top-0 left-0 w-screen h-screen"
+      class="bg-black bg-opacity-20 fixed top-0 left-0 w-screen min-h-screen"
       @click="emits('changeModal', '')"
     />
     <div
-      class="bg-white rounded-lg shadow-2xl md:max-w-[600px] md:w-full h-screen w-screen md:h-auto z-10"
+      class="bg-white scrollbar-hide rounded-lg shadow-2xl md:max-w-[600px] md:w-full pb-10 h-screen w-screen md:min-h-fit overflow-scroll relative md:h-auto z-10"
     >
       <div
         class="absolute top-10 right-10 md:hidden"

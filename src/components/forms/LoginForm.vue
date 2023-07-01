@@ -1,13 +1,13 @@
 <template>
   <div
-    class="fixed top-0 left-0 w-screen h-screen flex justify-center items-center"
+    class="fixed top-0 left-0 w-screen overflow-scroll scrollbar-hide min-h-screen flex justify-center items-center"
   >
     <div
-      class="bg-black bg-opacity-20 fixed top-0 left-0 w-screen h-screen"
+      class="bg-black bg-opacity-20 fixed top-0 left-0 w-screen min-h-screen"
       @click="emits('changeModal', '')"
     />
     <div
-      class="bg-white rounded-lg shadow-2xl md:max-w-[600px] md:w-full h-screen w-screen md:h-auto z-10"
+      class="bg-white rounded-lg scrollbar-hide shadow-2xl md:max-w-[600px] md:w-full min-h-screen w-screen md:min-h-fit md:h-auto z-10 overflow-scroll"
     >
       <div
         class="absolute top-10 right-10 md:hidden"
@@ -42,6 +42,10 @@
             :rules="inputField.rules"
             :placeholder="inputField.placeholder"
           />
+          <div class="flex gap-2 items-center">
+            <label for="remember">Remember me</label>
+            <Field type="checkbox" name="remember" id="remember" value="true" />
+          </div>
         </ul>
         <button
           type="submit"
@@ -55,7 +59,7 @@
 </template>
 
 <script setup>
-import { Form } from "vee-validate";
+import { Field, Form } from "vee-validate";
 import { ref } from "vue";
 import { FormInput, CloseIcon } from "@/components";
 
