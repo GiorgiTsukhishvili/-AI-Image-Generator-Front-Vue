@@ -1,9 +1,11 @@
 <template>
   <div class="bg-neutral-100 h-screen">
     <WrapperComponent>
-      <template v-for="(blog, i) in blogs" :key="blog.id">
-        <BlogLarge v-if="i === 0" :blog="blog" />
-      </template>
+      <ul class="w-full py-40 flex flex-wrap gap-16">
+        <li v-for="(blog, i) in blogs" :key="blog.id">
+          <BlogLarge v-if="i === 0" :blog="blog" />
+        </li>
+      </ul>
     </WrapperComponent>
   </div>
 </template>

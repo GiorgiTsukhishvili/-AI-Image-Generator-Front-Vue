@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mt-40 flex justify-between w-full items-center lg:flex-row flex-col gap-10"
+    class="flex justify-between w-full items-center lg:flex-row flex-col gap-10"
   >
     <img
       :src="props.blog.image"
@@ -9,11 +9,16 @@
     />
     <div class="flex-1 flex flex-col items-start self-stretch">
       <ul class="flex flex-wrap items-center gap-2">
-        <li v-for="tag in props.blog.tags" :key="tag.id">
+        <li
+          v-for="(tag, i) in props.blog.tags"
+          :key="tag.id"
+          :style="{ background: randColor(i).bg, color: randColor(i).text }"
+          class="px-4 py-2 rounded-md flex justify-center items-center"
+        >
           {{ tag.name }}
         </li>
       </ul>
-      <h2 class="md:text-3xl text-2xl font-bold mt-5">
+      <h2 class="md:text-4xl text-3xl font-bold mt-5">
         {{ props.blog.title }}
       </h2>
       <RouterLink class="mt-5 md:text-xl text-gray-500" :to="'#'">
@@ -40,7 +45,7 @@
 <script setup>
 import { ArrowRightIcon } from "@/components";
 import { RouterLink } from "vue-router";
-import { calculateData } from "@/helpers";
+import { calculateData, randColor } from "@/helpers";
 
 const props = defineProps({
   blog: { type: Object, required: true },
