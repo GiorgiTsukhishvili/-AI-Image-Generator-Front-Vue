@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-neutral-100 h-screen">
+  <div class="bg-neutral-100 min-h-screen">
     <WrapperComponent>
       <ul class="w-full py-40 flex flex-wrap gap-16">
         <li v-for="(blog, i) in blogs" :key="blog.id">

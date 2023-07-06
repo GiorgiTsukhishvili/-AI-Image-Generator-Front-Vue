@@ -10,9 +10,9 @@
     <div class="flex-1 flex flex-col items-start self-stretch">
       <ul class="flex flex-wrap items-center gap-2">
         <li
-          v-for="(tag, i) in props.blog.tags"
+          v-for="tag in props.blog.tags"
           :key="tag.id"
-          :style="{ background: randColor(i).bg, color: randColor(i).text }"
+          :style="randColor()"
           class="px-4 py-2 rounded-md flex justify-center items-center"
         >
           {{ tag.name }}
