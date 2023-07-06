@@ -2,8 +2,13 @@
   <div class="bg-neutral-100 min-h-screen">
     <WrapperComponent>
       <ul class="w-full py-40 flex flex-wrap gap-16">
-        <li v-for="(blog, i) in blogs" :key="blog.id">
+        <li
+          v-for="(blog, i) in blogs"
+          :key="blog.id"
+          :class="{ 'flex-1 min-w-[300px]': i !== 0 }"
+        >
           <BlogLarge v-if="i === 0" :blog="blog" />
+          <BlogSmall v-else :blog="blog" />
         </li>
       </ul>
     </WrapperComponent>
@@ -11,7 +16,7 @@
 </template>
 
 <script setup>
-import { WrapperComponent, BlogLarge } from "@/components";
+import { WrapperComponent, BlogLarge, BlogSmall } from "@/components";
 import { onMounted } from "vue";
 import { getAllBlogs, getCSRF } from "@/services";
 import { ref } from "vue";
