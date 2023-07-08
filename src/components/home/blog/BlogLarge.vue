@@ -1,6 +1,7 @@
 <template>
-  <div
+  <RouterLink
     class="flex justify-between w-full items-center lg:flex-row flex-col gap-10"
+    :to="'#'"
   >
     <img
       :src="props.blog.image"
@@ -21,10 +22,10 @@
       <h2 class="md:text-4xl text-3xl font-bold mt-5">
         {{ props.blog.title }}
       </h2>
-      <RouterLink class="mt-5 md:text-xl text-gray-500" :to="'#'">
+      <p class="mt-5 md:text-xl text-gray-500">
         {{ props.blog.description.slice(0, 180) }}...
         <ArrowRightIcon />
-      </RouterLink>
+      </p>
       <div class="mt-5 flex items-center gap-5 w-full">
         <img
           :src="props.blog.user.image"
@@ -38,12 +39,20 @@
           </p>
         </div>
       </div>
+      <div class="flex gap-4 items-center mt-5">
+        <span class="flex gap-2 items-center text-2xl">
+          <LikeIcon /> {{ props.blog.likes_count }}
+        </span>
+        <span class="flex gap-2 items-center text-2xl">
+          <CommentIcon /> {{ props.blog.comments_count }}
+        </span>
+      </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <script setup>
-import { ArrowRightIcon } from "@/components";
+import { ArrowRightIcon, LikeIcon, CommentIcon } from "@/components";
 import { RouterLink } from "vue-router";
 import { calculateData, randColor } from "@/helpers";
 
