@@ -1,7 +1,7 @@
 <template>
   <RouterLink
     class="flex justify-between items-center flex-col gap-10"
-    :to="'#'"
+    :to="{ name: 'blog', params: { id: props.blog.id } }"
   >
     <img
       :src="props.blog.image"
