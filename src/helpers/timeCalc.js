@@ -10,3 +10,11 @@ export const calculateData = (date) => {
     return Math.round(time / 60 / 24) + " day ago";
   }
 };
+
+export const formatDate = (date) => {
+  const newDate = new Date(date);
+
+  const formatDate = newDate.toString().split(" ");
+
+  return [formatDate[2], formatDate[1], formatDate[3]].join(" ");
+};
