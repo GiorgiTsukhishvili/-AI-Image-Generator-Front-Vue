@@ -33,7 +33,11 @@
           class="h-[60px] w-[60px] object-fit rounded-2xl"
         />
         <div class="self-start">
-          <h4 class="font-bold md:text-xl">By : {{ props.blog.user.name }}</h4>
+          <RouterLink
+            :to="{ name: 'user', params: { name: props.blog.user.name } }"
+            class="font-bold md:text-xl"
+            >By : {{ props.blog.user.name }}</RouterLink
+          >
           <p class="text-gray-500">
             {{ calculateData(props.blog.created_at) }}
           </p>

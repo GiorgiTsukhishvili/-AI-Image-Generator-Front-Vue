@@ -14,9 +14,12 @@
             <h3 class="md:text-xl text-lg font-medium mb-2">
               {{ formatDate(blogInfo.created_at) }}
             </h3>
-            <h2 class="font-semibold md:text-2xl text-xl">
+            <RouterLink
+              :to="{ name: 'user', params: { name: blogInfo.user.name } }"
+              class="font-semibold md:text-2xl text-xl"
+            >
               {{ blogInfo.user.name }}
-            </h2>
+            </RouterLink>
           </div>
           <h1 class="mt-10 font-bold md:text-3xl text-2xl">
             {{ blogInfo.title }}
