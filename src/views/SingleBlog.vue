@@ -25,7 +25,7 @@
             :src="blogInfo.image"
             alt="blog image"
             class="h-[600px] mt-10 w-full object-cover cursor-pointer"
-            @click="() => (imageWidow = true)"
+            @click="() => (modals.imageWindow = true)"
           />
           <p
             class="md:text-2xl text-xl font-medium mt-20 pt-20 border-t-2 border-gray-400"
@@ -35,7 +35,7 @@
 
           <ul class="mt-20 pt-20 border-t-2 border-gray-400">
             <li
-              v-for="comment in blogInfo.comments"
+              v-for="comment in slicedComments"
               :key="comment.id"
               class="border-b border-b-gray-400 last:border-b-0 py-10"
             >
@@ -57,14 +57,20 @@
               <p class="mt-10 md:text-xl text-lg">{{ comment.comment }}</p>
             </li>
           </ul>
+          <button
+            @click="() => (modals.isCommentsOpen = !modals.isCommentsOpen)"
+            class="md:text-2xl text-lg font-medium mt-10 mx-auto block"
+          >
+            {{ modals.isCommentsOpen ? "Show Less" : "Show More" }}
+          </button>
         </div>
       </div>
     </WrapperComponent>
   </div>
-  <div v-if="imageWidow" class="fixed top-0 left-0 h-screen w-screen">
+  <div v-if="modals.imageWindow" class="fixed top-0 left-0 h-screen w-screen">
     <div
       class="bg-black absolute top-0 left-0 h-screen w-screen bg-opacity-60 blur-xl"
-      @click="() => (imageWidow = false)"
+      @click="() => (modals.imageWindow = false)"
     />
     <img
       :src="blogInfo.image"
@@ -75,7 +81,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
 import { WrapperComponent } from "@/components";
@@ -88,13 +94,18 @@ const { params } = useRoute();
 const { push } = useRouter();
 
 const blogInfo = ref();
-const imageWidow = ref(false);
+const modals = ref({ imageWindow: false, isCommentsOpen: false });
+
+const slicedComments = computed(() =>
+  modals.value.isCommentsOpen
+    ? blogInfo.value.comments
+    : blogInfo.value.comments.slice(0, 3)
+);
 
 const getData = async (id) => {
   try {
     const data = await getSingleBlog(id);
 
-    console.log(data.data.comments[0]);
     blogInfo.value = data.data;
   } catch (err) {
     push("/notFound");
