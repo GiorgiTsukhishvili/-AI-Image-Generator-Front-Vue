@@ -28,10 +28,35 @@
             @click="() => (imageWidow = true)"
           />
           <p
-            class="md:text-xl text-xl font-medium mt-20 pt-20 border-t-2 border-gray-400"
+            class="md:text-2xl text-xl font-medium mt-20 pt-20 border-t-2 border-gray-400"
           >
             {{ blogInfo.description }}
           </p>
+
+          <ul class="mt-20 pt-20 border-t-2 border-gray-400">
+            <li
+              v-for="comment in blogInfo.comments"
+              :key="comment.id"
+              class="border-b border-b-gray-400 last:border-b-0 py-10"
+            >
+              <div class="flex gap-5">
+                <img
+                  :src="comment.user.image"
+                  alt="commenter image"
+                  class="w-16 h-16 rounded-full"
+                />
+                <div class="flex flex-col justify-between">
+                  <h3 class="md:text-xl text-lg font-semibold">
+                    {{ comment.user.name }}
+                  </h3>
+                  <h4 class="md:text-lg font-medium">
+                    {{ calculateData(comment.created_at) }}
+                  </h4>
+                </div>
+              </div>
+              <p class="mt-10 md:text-xl text-lg">{{ comment.comment }}</p>
+            </li>
+          </ul>
         </div>
       </div>
     </WrapperComponent>
@@ -57,7 +82,7 @@ import { WrapperComponent } from "@/components";
 
 import { getSingleBlog } from "@/services";
 
-import { formatDate } from "@/helpers";
+import { formatDate, calculateData } from "@/helpers";
 
 const { params } = useRoute();
 const { push } = useRouter();
@@ -69,7 +94,7 @@ const getData = async (id) => {
   try {
     const data = await getSingleBlog(id);
 
-    console.log(data.data);
+    console.log(data.data.comments[0]);
     blogInfo.value = data.data;
   } catch (err) {
     push("/notFound");
