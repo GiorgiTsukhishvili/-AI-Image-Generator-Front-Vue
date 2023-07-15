@@ -1,5 +1,5 @@
 <template>
-  <div class="h-20 shadow-2xl w-full bg-neutral-100 relative">
+  <div class="h-20 shadow-2xl w-full bg-neutral-100 relative z-10">
     <WrapperComponent>
       <div class="flex items-center h-20 justify-between w-full">
         <RouterLink to="/" class="font-bold md:text-2xl text-xl uppercase"
