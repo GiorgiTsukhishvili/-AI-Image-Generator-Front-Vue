@@ -98,11 +98,13 @@ import { useRoute, useRouter } from "vue-router";
 
 import { WrapperComponent, LikeIcon } from "@/components";
 
-import { getSingleBlog } from "@/services";
+import { getSingleBlog, getCSRF } from "@/services";
 
 import { formatDate, calculateData } from "@/helpers";
 
-const { params } = useRoute();
+const {
+  params: { id },
+} = useRoute();
 const { push } = useRouter();
 
 const blogInfo = ref();
@@ -116,6 +118,7 @@ const slicedComments = computed(() =>
 
 const getData = async (id) => {
   try {
+    await getCSRF();
     const data = await getSingleBlog(id);
 
     blogInfo.value = data.data;
@@ -125,6 +128,6 @@ const getData = async (id) => {
 };
 
 onMounted(() => {
-  getData(params.id);
+  getData(id);
 });
 </script>
