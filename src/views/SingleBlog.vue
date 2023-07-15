@@ -33,6 +33,15 @@
             {{ blogInfo.description }}
           </p>
 
+          <div class="mt-20 pt-20 border-t-2 border-gray-400">
+            <div class="flex gap-5 items-center">
+              <LikeIcon />
+              <h3 class="md:text-2xl text-xl font-medium">
+                {{ blogInfo.likes.length }} Likes
+              </h3>
+            </div>
+          </div>
+
           <ul class="mt-20 pt-20 border-t-2 border-gray-400">
             <li
               v-for="comment in slicedComments"
@@ -84,7 +93,7 @@
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import { WrapperComponent } from "@/components";
+import { WrapperComponent, LikeIcon } from "@/components";
 
 import { getSingleBlog } from "@/services";
 
