@@ -1,5 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { HomeView, SingleBlog, NotFound, SingleUserView } from "@/views";
+import {
+  HomeView,
+  SingleBlog,
+  NotFound,
+  SingleUserView,
+  CollectionView,
+} from "@/views";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,6 +24,11 @@ const router = createRouter({
       path: "/user/:name",
       name: "user",
       component: SingleUserView,
+    },
+    {
+      path: "/:user/:collection",
+      name: "collection",
+      component: CollectionView,
     },
     {
       path: "/:pathMatch(.*)*",
