@@ -40,7 +40,8 @@
             :key="collection.id"
             :to="{
               name: 'collection',
-              params: { user: userInfo.name, collection: collection.name },
+              params: { user: userInfo.name },
+              query: { collection: collection.id },
             }"
           >
             <img

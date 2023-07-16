@@ -26,7 +26,7 @@ const router = createRouter({
       component: SingleUserView,
     },
     {
-      path: "/:user/:collection",
+      path: "/:user",
       name: "collection",
       component: CollectionView,
     },
