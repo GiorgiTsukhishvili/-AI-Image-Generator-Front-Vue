@@ -35,7 +35,14 @@
           User Has No Collections So Far
         </h1>
         <ul v-else class="flex flex-wrap gap-10 justify-center">
-          <li v-for="collection in userInfo.collections" :key="collection.id">
+          <RouterLink
+            v-for="collection in userInfo.collections"
+            :key="collection.id"
+            :to="{
+              name: 'collection',
+              params: { user: userInfo.name, collection: collection.name },
+            }"
+          >
             <img
               :src="
                 collection.image
@@ -55,7 +62,7 @@
             >
               Total blogs: {{ collection.blogs_count }}
             </h3>
-          </li>
+          </RouterLink>
         </ul>
       </div>
     </WrapperComponent>
