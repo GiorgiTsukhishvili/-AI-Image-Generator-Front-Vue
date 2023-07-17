@@ -1,15 +1,20 @@
 <template>
   <li class="border-b border-b-gray-400 last:border-b-0 py-10">
     <div class="flex gap-5">
-      <img
-        :src="props.user.image"
-        alt="commenter image"
-        class="w-16 h-16 rounded-full"
-      />
+      <RouterLink :to="{ name: 'user', params: { name: user.name } }">
+        <img
+          :src="props.user.image"
+          alt="commenter image"
+          class="w-16 h-16 rounded-full"
+        />
+      </RouterLink>
       <div class="flex flex-col justify-between">
-        <h3 class="md:text-xl text-lg font-semibold">
+        <RouterLink
+          :to="{ name: 'user', params: { name: user.name } }"
+          class="md:text-xl text-lg font-semibold"
+        >
           {{ props.user.name }}
-        </h3>
+        </RouterLink>
         <h4 class="md:text-lg font-medium">
           {{ calculateData(props.date) }}
         </h4>
