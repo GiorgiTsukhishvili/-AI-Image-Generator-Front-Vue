@@ -23,9 +23,15 @@
           </div>
           <div class="flex items-center gap-3 my-8">
             <h3 class="md:text-xl text-lg font-medium">Collection:</h3>
-            <RouterLink :to="''" class="md:text-xl text-lg font-medium">{{
-              blogInfo.collection.name
-            }}</RouterLink>
+            <RouterLink
+              :to="{
+                name: 'collection',
+                params: { user: blogInfo.user.name },
+                query: { collection: blogInfo.collection.id },
+              }"
+              class="md:text-xl text-lg font-medium"
+              >{{ blogInfo.collection.name }}</RouterLink
+            >
           </div>
           <h1 class="mt-10 font-bold md:text-3xl text-2xl">
             {{ blogInfo.title }}
