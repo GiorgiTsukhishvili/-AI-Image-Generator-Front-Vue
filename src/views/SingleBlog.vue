@@ -21,6 +21,12 @@
               {{ blogInfo.user.name }}
             </RouterLink>
           </div>
+          <div class="flex items-center gap-3 my-8">
+            <h3 class="md:text-xl text-lg font-medium">Collection:</h3>
+            <RouterLink :to="''" class="md:text-xl text-lg font-medium">{{
+              blogInfo.collection.name
+            }}</RouterLink>
+          </div>
           <h1 class="mt-10 font-bold md:text-3xl text-2xl">
             {{ blogInfo.title }}
           </h1>
@@ -46,32 +52,18 @@
           </div>
 
           <ul class="mt-20 pt-20 border-t-2 border-gray-400">
-            <li
+            <BlogComment
               v-for="comment in slicedComments"
               :key="comment.id"
-              class="border-b border-b-gray-400 last:border-b-0 py-10"
-            >
-              <div class="flex gap-5">
-                <img
-                  :src="comment.user.image"
-                  alt="commenter image"
-                  class="w-16 h-16 rounded-full"
-                />
-                <div class="flex flex-col justify-between">
-                  <h3 class="md:text-xl text-lg font-semibold">
-                    {{ comment.user.name }}
-                  </h3>
-                  <h4 class="md:text-lg font-medium">
-                    {{ calculateData(comment.created_at) }}
-                  </h4>
-                </div>
-              </div>
-              <p class="mt-10 md:text-xl text-lg">{{ comment.comment }}</p>
-            </li>
+              :comment="comment.comment"
+              :user="comment.user"
+              :date="comment.created_at"
+            />
           </ul>
           <button
             @click="() => (modals.isCommentsOpen = !modals.isCommentsOpen)"
             class="md:text-2xl text-lg font-medium mt-10 mx-auto block"
+            v-if="blogInfo.comments.length > 3"
           >
             {{ modals.isCommentsOpen ? "Show Less" : "Show More" }}
           </button>
@@ -96,11 +88,11 @@
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-import { WrapperComponent, LikeIcon } from "@/components";
+import { WrapperComponent, LikeIcon, BlogComment } from "@/components";
 
 import { getSingleBlog, getCSRF } from "@/services";
 
-import { formatDate, calculateData } from "@/helpers";
+import { formatDate } from "@/helpers";
 
 const {
   params: { id },
