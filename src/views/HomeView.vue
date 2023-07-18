@@ -1,16 +1,19 @@
 <template>
-  <div class="bg-neutral-100 min-h-screen flex flex-col justify-center pb-40">
+  <div class="bg-neutral-100 min-h-screen flex flex-col justify-start pb-40">
     <WrapperComponent>
-      <ul class="w-full pt-40 flex flex-wrap gap-16">
-        <li
-          v-for="(blog, i) in blogs"
-          :key="blog.id"
-          :class="{ 'flex-1 min-w-[300px] max-w-[600px]': i !== 0 }"
-        >
-          <BlogLarge v-if="i === 0" :blog="blog" />
-          <BlogSmall v-else :blog="blog" />
-        </li>
-      </ul>
+      <div class="flex flex-col gap-20 pt-20 w-full">
+        <HomeSearch />
+        <ul class="w-full flex flex-wrap gap-16">
+          <li
+            v-for="(blog, i) in blogs"
+            :key="blog.id"
+            :class="{ 'flex-1 min-w-[300px] max-w-[600px]': i !== 0 }"
+          >
+            <BlogLarge v-if="i === 0" :blog="blog" />
+            <BlogSmall v-else :blog="blog" />
+          </li>
+        </ul>
+      </div>
     </WrapperComponent>
     <button
       @click="blogsData"
@@ -23,24 +26,34 @@
 </template>
 
 <script setup>
-import { WrapperComponent, BlogLarge, BlogSmall } from "@/components";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
+
+import { useRoute } from "vue-router";
+
+import {
+  WrapperComponent,
+  BlogLarge,
+  BlogSmall,
+  HomeSearch,
+} from "@/components";
+
 import { getAllBlogs, getCSRF } from "@/services";
-import { ref } from "vue";
 
 const blogs = ref([]);
 const currentPage = ref(1);
 const lastPage = ref(0);
 
-const blogsData = async () => {
+const route = useRoute();
+
+const blogsData = async (query) => {
   await getCSRF();
-  const data = await getAllBlogs(currentPage.value);
+  const data = await getAllBlogs(currentPage.value, query);
   blogs.value = [blogs.value, data.data.blogs.data].flat();
   currentPage.value++;
   lastPage.value = data.data.blogs.last_page;
 };
 
 onMounted(() => {
-  blogsData();
+  blogsData(route.query);
 });
 </script>

@@ -2,8 +2,8 @@
   <div class="h-20 shadow-2xl w-full bg-neutral-100 relative z-10">
     <WrapperComponent>
       <div class="flex items-center h-20 justify-between w-full">
-        <RouterLink to="/" class="font-bold md:text-2xl text-xl uppercase"
-          >Image blog</RouterLink
+        <a href="/" class="font-bold md:text-2xl text-xl uppercase"
+          >Image blog</a
         >
         <div>
           <div class="flex items-center gap-4">
@@ -39,14 +39,14 @@
 </template>
 
 <script setup>
-import { RouterLink } from "vue-router";
+import { ref, watchEffect } from "vue";
+
 import {
   LoginForm,
   WrapperComponent,
   RegisterForm,
   ForgotPasswordForm,
 } from "@/components";
-import { ref, watchEffect } from "vue";
 
 const whichModalOpen = ref("");
 
