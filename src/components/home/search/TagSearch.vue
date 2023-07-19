@@ -8,14 +8,17 @@
       @focusout="() => (dropdown = false)"
       tabindex="0"
     >
-      <h2 v-if="chosenTags.length === 0" class="text-black text-xl font-medium">
+      <h2
+        v-if="chosenTags.length === 0"
+        class="text-black text-xl font-medium py-1"
+      >
         Add Tags...
       </h2>
       <ul v-else class="flex gap-2 flex-wrap items-center">
         <li
           v-for="(chosenTag, i) in chosenTags"
           :key="i"
-          class="bg-gray-300 rounded-md px-2 py-1"
+          class="bg-gray-300 rounded-md px-2 py-1 text-xl font-medium"
           @click="() => addOrRemoveTag(chosenTag)"
         >
           {{ chosenTag }}
@@ -45,10 +48,15 @@
 <script setup>
 import { ref, onMounted } from "vue";
 
+import { useRoute, useRouter } from "vue-router";
+
 import { getAllTags, getCSRF } from "@/services";
 
+const { query, path } = useRoute();
+const { push, go } = useRouter();
+
 const tags = ref([]);
-const chosenTags = ref([]);
+const chosenTags = ref(query.tags ? query.tags.split(",") : []);
 const dropdown = ref(false);
 
 const addOrRemoveTag = (tag) => {
@@ -59,7 +67,13 @@ const addOrRemoveTag = (tag) => {
   chosenTags.value.push(tag);
 };
 
-const filter = () => {};
+const filter = () => {
+  push({ path, query: { ...query, tags: chosenTags.value.join(",") } }).then(
+    () => {
+      go();
+    }
+  );
+};
 
 const getTags = async () => {
   try {
