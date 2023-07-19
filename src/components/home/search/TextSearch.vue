@@ -1,6 +1,6 @@
 <template>
   <form
-    class="mb-20 flex items-center justify-center"
+    class="flex items-center justify-center"
     v-on:submit.prevent="changeSearch"
   >
     <input

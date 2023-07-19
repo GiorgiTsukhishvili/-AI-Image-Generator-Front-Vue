@@ -2,7 +2,8 @@
   <div class="bg-neutral-100 min-h-screen flex flex-col justify-start pb-40">
     <WrapperComponent>
       <div class="flex flex-col gap-20 pt-20 w-full">
-        <HomeSearch />
+        <TextSearch />
+        <TagSearch />
         <ul class="w-full flex flex-wrap gap-16">
           <li
             v-for="(blog, i) in blogs"
@@ -34,7 +35,8 @@ import {
   WrapperComponent,
   BlogLarge,
   BlogSmall,
-  HomeSearch,
+  TextSearch,
+  TagSearch,
 } from "@/components";
 
 import { getAllBlogs, getCSRF } from "@/services";
@@ -48,8 +50,11 @@ const route = useRoute();
 const blogsData = async (query) => {
   await getCSRF();
   const data = await getAllBlogs(currentPage.value, query);
+
   blogs.value = [blogs.value, data.data.blogs.data].flat();
+
   currentPage.value++;
+
   lastPage.value = data.data.blogs.last_page;
 };
 
