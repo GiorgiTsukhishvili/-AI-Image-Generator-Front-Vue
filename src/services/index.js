@@ -3,3 +3,4 @@ export * from "./blogCRUD";
 export * from "./getCSRF";
 export * from "./userCRUD";
 export * from "./collectionCRUD";
+export * from "./getTags";
