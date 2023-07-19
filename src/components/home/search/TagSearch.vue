@@ -3,7 +3,7 @@
     class="md:mb-20 mb-5 bg-white shadow-xl rounded-md py-3 px-6 max-w-[850px] mx-auto w-full flex justify-between gap-5"
   >
     <div
-      class="min-h-20 w-full relative"
+      class="min-h-20 w-full"
       @focus="() => (dropdown = true)"
       @focusout="() => (dropdown = false)"
       tabindex="0"
@@ -11,14 +11,32 @@
       <h2 v-if="chosenTags.length === 0" class="text-black text-xl font-medium">
         Add Tags...
       </h2>
-      <ul
-        class="absolute w-full h-[400px] scroll left-0 top-16 overflow-y-scroll bg-white rounded-md shadow-xl duration-300 origin-top px-4 py-5 flex flex-col gap-2"
-        :style="{ transform: dropdown ? 'scaleY(1)' : 'scaleY(0)' }"
-      >
-        <li v-for="tag in tags" :key="tag.id" class="text-lg font-medium">
-          {{ tag.name }}
+      <ul v-else class="flex gap-2 flex-wrap items-center">
+        <li
+          v-for="(chosenTag, i) in chosenTags"
+          :key="i"
+          class="bg-gray-300 rounded-md px-2 py-1"
+          @click="() => addOrRemoveTag(chosenTag)"
+        >
+          {{ chosenTag }}
         </li>
       </ul>
+      <div class="relative">
+        <ul
+          class="absolute w-[110%] h-[400px] scroll left-0 top-6 overflow-y-scroll bg-white rounded-md shadow-2xl duration-300 origin-top py-5 flex flex-col gap-2"
+          :style="{ transform: dropdown ? 'scaleY(1)' : 'scaleY(0)' }"
+        >
+          <li
+            v-for="tag in tags"
+            :key="tag.id"
+            class="text-lg font-medium px-4 cursor-pointer"
+            @click="() => addOrRemoveTag(tag.name)"
+            :class="{ 'bg-gray-300': chosenTags.includes(tag.name) }"
+          >
+            {{ tag.name }}
+          </li>
+        </ul>
+      </div>
     </div>
     <button class="text-xl font-semibold" @click="filter">Filter</button>
   </div>
@@ -32,6 +50,14 @@ import { getAllTags, getCSRF } from "@/services";
 const tags = ref([]);
 const chosenTags = ref([]);
 const dropdown = ref(false);
+
+const addOrRemoveTag = (tag) => {
+  if (chosenTags.value.includes(tag)) {
+    return (chosenTags.value = chosenTags.value.filter((ct) => ct !== tag));
+  }
+
+  chosenTags.value.push(tag);
+};
 
 const filter = () => {};
 
