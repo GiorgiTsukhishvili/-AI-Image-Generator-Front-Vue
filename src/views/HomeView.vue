@@ -4,7 +4,7 @@
       <div class="flex flex-col gap-20 pt-20 w-full">
         <TextSearch />
         <TagSearch />
-        <ul class="w-full flex flex-wrap gap-16">
+        <ul class="w-full flex flex-wrap gap-16" v-if="blogs.length > 0">
           <li
             v-for="(blog, i) in blogs"
             :key="blog.id"
@@ -14,10 +14,16 @@
             <BlogSmall v-else :blog="blog" />
           </li>
         </ul>
+        <h2
+          v-else
+          class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-4xl font-semibold"
+        >
+          No Blogs Were Found...
+        </h2>
       </div>
     </WrapperComponent>
     <button
-      @click="blogsData"
+      @click="() => blogsData(route.query)"
       class="py-40 text-2xl font-bold"
       v-if="currentPage <= lastPage"
     >

@@ -25,7 +25,7 @@ import { ref } from "vue";
 const { query, path } = useRoute();
 const { push, go } = useRouter();
 
-const search = ref("");
+const search = ref(query.search ?? "");
 
 const changeSearch = () => {
   push({ path, query: { ...query, search: search.value } }).then(() => {

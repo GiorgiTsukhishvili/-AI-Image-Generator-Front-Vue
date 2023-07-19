@@ -26,13 +26,13 @@
       </ul>
       <div class="relative">
         <ul
-          class="absolute w-[110%] h-[400px] scroll left-0 top-6 overflow-y-scroll bg-white rounded-md shadow-2xl duration-300 origin-top py-5 flex flex-col gap-2"
+          class="absolute w-[110%] h-[400px] z-10 scroll left-0 top-6 overflow-y-scroll bg-white rounded-md shadow-2xl duration-300 origin-top py-5 flex flex-col gap-2"
           :style="{ transform: dropdown ? 'scaleY(1)' : 'scaleY(0)' }"
         >
           <li
             v-for="tag in tags"
             :key="tag.id"
-            class="text-lg font-medium px-4 cursor-pointer"
+            class="text-lg font-medium px-4 cursor-pointer py-1"
             @click="() => addOrRemoveTag(tag.name)"
             :class="{ 'bg-gray-300': chosenTags.includes(tag.name) }"
           >
