@@ -19,7 +19,9 @@
               {{ userInfo.name }}
             </h1>
             <h3 class="md:text-2xl text-lg font-medium mt-3">
-              Subscribers: {{ userInfo.subscribers_count }}
+              <span class="font-semibold">@{{ userInfo.name }}</span>
+              Subscribers: {{ userInfo.subscribers_count }} Blogs:
+              {{ userInfo.blogs_count }}
             </h3>
           </div>
         </div>
