@@ -1,31 +1,36 @@
 <template>
-  <RouterLink
-    class="flex justify-between items-center flex-col gap-10"
-    :to="{ name: 'blog', params: { id: props.blog.id } }"
-  >
-    <img
-      :src="props.blog.image"
-      alt="blog image"
-      class="h-[300px] w-full object-fit rounded-2xl"
-    />
+  <div class="flex justify-between items-center flex-col gap-10">
+    <RouterLink
+      :to="{ name: 'blog', params: { id: props.blog.id } }"
+      class="w-full"
+    >
+      <img
+        :src="props.blog.image"
+        alt="blog image"
+        class="h-[300px] w-full object-fit rounded-2xl"
+      />
+    </RouterLink>
     <div class="flex flex-col items-start self-stretch">
       <ul class="flex flex-wrap items-center gap-2">
-        <li
+        <TagCommon
           v-for="tag in props.blog.tags"
           :key="tag.id"
-          :style="randColor()"
-          class="px-4 py-2 rounded-md flex justify-center items-center"
-        >
-          {{ tag.name }}
-        </li>
+          :name="tag.name"
+        />
       </ul>
-      <h2 class="md:text-3xl text-2xl font-bold mt-5">
+      <RouterLink
+        class="md:text-3xl text-2xl font-bold mt-5"
+        :to="{ name: 'blog', params: { id: props.blog.id } }"
+      >
         {{ props.blog.title }}
-      </h2>
-      <p class="mt-5 md:text-xl text-gray-500">
+      </RouterLink>
+      <RouterLink
+        class="mt-5 md:text-xl text-gray-500"
+        :to="{ name: 'blog', params: { id: props.blog.id } }"
+      >
         {{ props.blog.description.slice(0, 180) }}...
         <ArrowRightIcon />
-      </p>
+      </RouterLink>
       <div class="mt-5 flex items-center gap-5 w-full">
         <img
           :src="props.blog.user.image"
@@ -52,13 +57,15 @@
         </span>
       </div>
     </div>
-  </RouterLink>
+  </div>
 </template>
 
 <script setup>
-import { ArrowRightIcon, LikeIcon, CommentIcon } from "@/components";
+import { ArrowRightIcon, LikeIcon, CommentIcon, TagCommon } from "@/components";
+
 import { RouterLink } from "vue-router";
-import { calculateData, randColor } from "@/helpers";
+
+import { calculateData } from "@/helpers";
 
 const props = defineProps({
   blog: { type: Object, required: true },
