@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fixed top-0 left-0 w-screen overflow-scroll scrollbar-hide min-h-screen flex justify-center items-center"
+    class="fixed top-0 left-0 w-screen overflow-scroll scrollbar-hide min-h-screen flex justify-center items-center z-50"
   >
     <div
       class="bg-black bg-opacity-20 fixed top-0 left-0 w-screen min-h-screen"
