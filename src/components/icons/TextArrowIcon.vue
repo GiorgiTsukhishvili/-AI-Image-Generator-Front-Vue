@@ -1,0 +1,22 @@
+<template>
+  <svg
+    width="30px"
+    height="30px"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    :style="{ transform: props.direction ? 'rotate(0deg)' : 'rotate(180deg)' }"
+  >
+    <path
+      d="M15 7L10 12L15 17"
+      stroke="#000000"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</template>
+
+<script setup>
+const props = defineProps({ direction: { required: true } });
+</script>

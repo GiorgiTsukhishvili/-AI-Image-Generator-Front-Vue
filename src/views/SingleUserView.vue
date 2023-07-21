@@ -25,8 +25,21 @@
             </h3>
           </div>
         </div>
+        <p
+          v-if="userInfo.description"
+          class="my-10 text-xl font-medium"
+          @click="() => (enlargeDescription = !enlargeDescription)"
+          :class="{ 'flex items-center': !enlargeDescription }"
+        >
+          <span :class="{ 'line-clamp-1': !enlargeDescription }">
+            {{ userInfo.description }}
+          </span>
+          <span class="inline-block align-middle">
+            <TextArrowIcon :direction="enlargeDescription" />
+          </span>
+        </p>
         <h2
-          class="mt-20 pb-10 mb-10 border-b-2 border-gray-500 w-full md:text-3xl text-2xl"
+          class="mt-16 pb-10 mb-10 border-b-2 border-gray-500 w-full md:text-3xl text-2xl"
         >
           Collections:
         </h2>
@@ -79,9 +92,10 @@ import { useRoute, useRouter } from "vue-router";
 
 import { getDesiredUser, getCSRF } from "@/services";
 
-import { WrapperComponent } from "@/components";
+import { WrapperComponent, TextArrowIcon } from "@/components";
 
 const userInfo = ref();
+const enlargeDescription = ref(false);
 
 const {
   params: { name },
