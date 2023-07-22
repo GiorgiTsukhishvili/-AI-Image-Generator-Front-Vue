@@ -14,10 +14,7 @@
             <BlogSmall v-else :blog="blog" />
           </li>
         </ul>
-        <h2
-          v-else
-          class="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 text-4xl font-semibold"
-        >
+        <h2 v-else class="mx-auto text-4xl font-semibold">
           No Blogs Were Found...
         </h2>
       </div>

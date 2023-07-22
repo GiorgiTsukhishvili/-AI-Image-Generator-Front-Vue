@@ -3,7 +3,7 @@
     <WrapperComponent>
       <div class="flex items-center h-20 justify-between w-full">
         <a href="/" class="font-bold md:text-2xl text-xl uppercase"
-          >Image blog</a
+          >Image Echoes</a
         >
         <div>
           <div class="flex items-center gap-4">
