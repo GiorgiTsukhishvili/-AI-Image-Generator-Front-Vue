@@ -23,7 +23,13 @@
           Collection : {{ collectionInfo.name }}
         </h1>
         <ul class="mt-16 flex flex-wrap gap-20">
-          <CollectionBlog v-for="blog in collectionInfo.blogs" :key="blog.id" />
+          <CollectionBlog
+            v-for="blog in collectionInfo.blogs"
+            :key="blog.id"
+            :title="blog.title"
+            :image="blog.image"
+            :id="blog.id"
+          />
         </ul>
       </div>
     </WrapperComponent>
