@@ -5,3 +5,4 @@ export * from "./icons";
 export * from "./home";
 export * from "./blog";
 export * from "./common";
+export * from "./collection";

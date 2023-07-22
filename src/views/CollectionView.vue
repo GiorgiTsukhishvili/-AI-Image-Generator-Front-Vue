@@ -22,6 +22,9 @@
         <h1 class="md:text-3xl text-2xl font-semibold">
           Collection : {{ collectionInfo.name }}
         </h1>
+        <ul class="mt-16 flex flex-wrap gap-20">
+          <CollectionBlog v-for="blog in collectionInfo.blogs" :key="blog.id" />
+        </ul>
       </div>
     </WrapperComponent>
   </div>
@@ -34,7 +37,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import { getCSRF, getDesiredCollection } from "@/services";
 
-import { WrapperComponent } from "@/components";
+import { WrapperComponent, CollectionBlog } from "@/components";
 
 const {
   params: { user },
