@@ -76,11 +76,17 @@ import { Field, Form } from "vee-validate";
 import { ref } from "vue";
 import { FormInput, CloseIcon } from "@/components";
 
+import { useUserStore } from "@/stores";
+
+import { getCSRF, logInUser } from "@/services";
+
 const emits = defineEmits(["changeModal"]);
+
+const { setUserInfo } = useUserStore();
 
 const loginFields = [
   {
-    name: "username",
+    name: "name",
     type: "text",
     placeholder: "Input Your Username",
     rules: "required|min:3",
@@ -95,7 +101,15 @@ const loginFields = [
 
 const inputFields = ref(loginFields);
 
-const handleSubmit = (values) => {
-  console.log(values);
+const handleSubmit = async (values) => {
+  try {
+    await getCSRF();
+    const data = await logInUser(values);
+
+    setUserInfo(data.data.user);
+    emits("changeModal", "");
+  } catch (err) {
+    console.log(err);
+  }
 };
 </script>

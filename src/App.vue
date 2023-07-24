@@ -18,7 +18,7 @@ const getUserInforMation = async () => {
   try {
     await getCSRF();
     const data = await getLoggedInUser();
-    console.log(data.data);
+    setUserInfo(data.data);
   } catch (err) {
     setUserInfo(null);
   }
