@@ -4,5 +4,27 @@
 </template>
 
 <script setup>
-import NavbarComponent from "./components/navbar/NavbarComponent.vue";
+import { onBeforeMount } from "vue";
+
+import { NavbarComponent } from "@/components";
+
+import { getCSRF, getLoggedInUser } from "@/services";
+
+import { useUserStore } from "@/stores";
+
+const { setUserInfo } = useUserStore();
+
+const getUserInforMation = async () => {
+  try {
+    await getCSRF();
+    const data = await getLoggedInUser();
+    console.log(data.data);
+  } catch (err) {
+    setUserInfo(null);
+  }
+};
+
+onBeforeMount(() => {
+  getUserInforMation();
+});
 </script>
