@@ -48,13 +48,20 @@
             {{ blogInfo.description }}
           </p>
 
-          <div class="mt-20 pt-20 border-t-2 border-gray-400">
+          <div class="mt-20">
             <div class="flex gap-5 items-center">
               <LikeIcon />
               <h3 class="md:text-2xl text-xl font-medium">
                 {{ blogInfo.likes.length }} Likes
               </h3>
             </div>
+            <button
+              class="text-xl font-bold mt-4"
+              @click="like"
+              v-if="user.user !== null"
+            >
+              Like Blog
+            </button>
           </div>
 
           <ul class="mt-20 pt-20 border-t-2 border-gray-400">
@@ -94,11 +101,15 @@
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
+import { useUserStore } from "@/stores";
+
 import { WrapperComponent, LikeIcon, BlogComment } from "@/components";
 
-import { getSingleBlog, getCSRF } from "@/services";
+import { getSingleBlog, getCSRF, likeBlog } from "@/services";
 
 import { formatDate } from "@/helpers";
+
+const user = useUserStore();
 
 const {
   params: { id },
@@ -113,6 +124,26 @@ const slicedComments = computed(() =>
     ? blogInfo.value.comments
     : blogInfo.value.comments.slice(0, 3)
 );
+
+const like = async () => {
+  try {
+    await getCSRF();
+    const data = await likeBlog({ user_id: user.user.id, blog_id: 24 });
+    if (data.data.message === "Blog liked successfully") {
+      blogInfo.value.likes.push({
+        id: 38,
+        user_id: user.id,
+        blog_id: 24,
+      });
+    } else {
+      blogInfo.value.likes = blogInfo.value.likes.filter(
+        (like) => like.user_id !== user.user.id
+      );
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const getData = async (id) => {
   try {
