@@ -89,9 +89,9 @@ const { setUserInfo } = useUserStore();
 
 const loginFields = [
   {
-    name: "name",
+    name: "login",
     type: "text",
-    placeholder: "Input Your Username",
+    placeholder: "Input Your Username Or Email",
     rules: "required|min:3",
   },
   {
