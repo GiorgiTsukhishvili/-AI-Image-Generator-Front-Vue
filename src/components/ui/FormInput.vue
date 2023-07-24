@@ -6,7 +6,7 @@
       :type="type"
       :rules="rules"
       :validate-on-input="true"
-      class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-10"
+      class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-7"
       :placeholder="placeholder"
     />
     <ErrorMessage :name="name" class="text-red-600 absolute -bottom-8" />

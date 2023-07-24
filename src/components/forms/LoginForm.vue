@@ -42,6 +42,9 @@
             :rules="inputField.rules"
             :placeholder="inputField.placeholder"
           />
+          <h2 class="h-[20px] text-red-500 font-medium text-lg mb-7">
+            {{ errorMessage }}
+          </h2>
           <li class="flex justify-between items-center">
             <div class="flex gap-2 items-center">
               <label for="remember">Remember me</label>
@@ -100,6 +103,7 @@ const loginFields = [
 ];
 
 const inputFields = ref(loginFields);
+const errorMessage = ref("");
 
 const handleSubmit = async (values) => {
   try {
@@ -109,7 +113,7 @@ const handleSubmit = async (values) => {
     setUserInfo(data.data.user);
     emits("changeModal", "");
   } catch (err) {
-    console.log(err);
+    errorMessage.value = "Username or Password is incorrect.";
   }
 };
 </script>

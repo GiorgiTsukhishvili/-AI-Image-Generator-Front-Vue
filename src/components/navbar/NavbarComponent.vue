@@ -6,7 +6,7 @@
           >Image Echoes</a
         >
         <div>
-          <div class="flex items-center gap-4">
+          <div class="flex items-center gap-4" v-if="user.user === null">
             <button
               class="bg-none text-blue-600 border border-blue-600 rounded-md text-lg font-bold px-4 py-1"
               @click="() => changeModal('login')"
@@ -19,6 +19,9 @@
             >
               Sign Up
             </button>
+          </div>
+          <div v-else>
+            <button @click="logout">logout</button>
           </div>
         </div>
       </div>
@@ -41,6 +44,8 @@
 <script setup>
 import { ref, watchEffect } from "vue";
 
+import { logoutUser, getCSRF } from "@/services";
+
 import {
   LoginForm,
   WrapperComponent,
@@ -48,7 +53,21 @@ import {
   ForgotPasswordForm,
 } from "@/components";
 
+import { useUserStore } from "@/stores";
+
 const whichModalOpen = ref("");
+
+const user = useUserStore();
+
+const logout = async () => {
+  try {
+    await getCSRF();
+    await logoutUser();
+    user.setUserInfo(null);
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 const changeModal = (modal) => (whichModalOpen.value = modal);
 
