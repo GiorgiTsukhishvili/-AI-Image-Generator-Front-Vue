@@ -55,12 +55,12 @@
                 value="true"
               />
             </div>
-            <button
+            <span
               class="text-base md:text-lg"
               @click="emits('changeModal', 'forgot-password')"
             >
               Forgot Password?
-            </button>
+            </span>
           </li>
         </ul>
         <button
