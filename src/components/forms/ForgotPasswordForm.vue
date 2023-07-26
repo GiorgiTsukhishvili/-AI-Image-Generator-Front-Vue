@@ -16,7 +16,10 @@
         <CloseIcon />
       </div>
       <div class="flex items-center gap-10 w-full justify-center pt-10">
-        <button class="text-2xl text-gray-700 border-b-4 border-b-gray-700">
+        <button
+          class="text-2xl text-gray-700"
+          @click="emits('changeModal', 'login')"
+        >
           Login
         </button>
         <button
