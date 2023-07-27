@@ -48,20 +48,46 @@
             {{ blogInfo.description }}
           </p>
 
-          <div class="mt-20">
-            <div class="flex gap-5 items-center">
-              <LikeIcon />
-              <h3 class="md:text-2xl text-xl font-medium">
-                {{ blogInfo.likes.length }} Likes
-              </h3>
+          <div class="mt-20 flex xl:flex-row flex-col gap-10">
+            <div class="flex-1">
+              <div class="flex gap-5 items-center">
+                <LikeIcon />
+                <h3 class="md:text-2xl text-xl font-medium">
+                  {{ blogInfo.likes.length }} Likes
+                </h3>
+              </div>
+              <button
+                class="text-xl font-bold mt-4"
+                @click="like"
+                v-if="user.user !== null"
+              >
+                Like Blog
+              </button>
             </div>
-            <button
-              class="text-xl font-bold mt-4"
-              @click="like"
+            <Form
+              class="flex-1 flex flex-col gap-5 relative"
               v-if="user.user !== null"
+              @submit="handleSubmit"
             >
-              Like Blog
-            </button>
+              <label class="text-xl font-bold">Add Comment</label>
+              <Field
+                as="textArea"
+                name="comment"
+                id="comment"
+                cols="30"
+                rows="5"
+                :validate-on-input="true"
+                rules="required"
+                v-model="comment"
+                class="bg-none text-lg py-4 px-4 max-w-[600px] text-black border-2 border-gray-600 focus:ring-0 focus:outline-none rounded-md"
+              />
+              <button
+                v-if="comment.trim() !== ''"
+                class="text-lg font-semibold self-start absolute -bottom-10"
+              >
+                Comment
+              </button>
+            </Form>
           </div>
 
           <ul class="mt-20 pt-20 border-t-2 border-gray-400">
@@ -100,6 +126,7 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { Field, Form } from "vee-validate";
 
 import { useUserStore } from "@/stores";
 
@@ -118,6 +145,7 @@ const { push } = useRouter();
 
 const blogInfo = ref();
 const modals = ref({ imageWindow: false, isCommentsOpen: false });
+const comment = ref("");
 
 const slicedComments = computed(() =>
   modals.value.isCommentsOpen
@@ -154,6 +182,10 @@ const getData = async (id) => {
   } catch (err) {
     push("/notFound");
   }
+};
+
+const handleSubmit = (values) => {
+  console.log(values);
 };
 
 onMounted(() => {
