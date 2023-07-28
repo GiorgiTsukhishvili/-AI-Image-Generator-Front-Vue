@@ -156,12 +156,15 @@ const slicedComments = computed(() =>
 const like = async () => {
   try {
     await getCSRF();
-    const data = await likeBlog({ user_id: user.user.id, blog_id: 24 });
+    const data = await likeBlog({
+      user_id: user.user.id,
+      blog_id: blogInfo.value.id,
+    });
     if (data.data.message === "Blog liked successfully") {
       blogInfo.value.likes.push({
         id: 38,
-        user_id: user.id,
-        blog_id: 24,
+        user_id: user.user.id,
+        blog_id: blogInfo.value.id,
       });
     } else {
       blogInfo.value.likes = blogInfo.value.likes.filter(
