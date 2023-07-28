@@ -49,21 +49,7 @@
           </p>
 
           <div class="mt-20 flex xl:flex-row flex-col gap-10">
-            <div class="flex-1">
-              <div class="flex gap-5 items-center">
-                <LikeIcon />
-                <h3 class="md:text-2xl text-xl font-medium">
-                  {{ blogInfo.likes.length }} Likes
-                </h3>
-              </div>
-              <button
-                class="text-xl font-bold mt-4"
-                @click="like"
-                v-if="user.user !== null"
-              >
-                {{ likeOrUnlike }}
-              </button>
-            </div>
+            <BlogLike :blogInfo="blogInfo" @removeOrAdd="likeBlog" />
             <Form
               class="flex-1 flex flex-col gap-5 relative"
               v-if="user.user !== null"
@@ -130,9 +116,9 @@ import { Field, Form } from "vee-validate";
 
 import { useUserStore } from "@/stores";
 
-import { WrapperComponent, LikeIcon, BlogComment } from "@/components";
+import { WrapperComponent, BlogComment, BlogLike } from "@/components";
 
-import { getSingleBlog, getCSRF, likeBlog } from "@/services";
+import { getSingleBlog, getCSRF } from "@/services";
 
 import { formatDate } from "@/helpers";
 
@@ -153,35 +139,6 @@ const slicedComments = computed(() =>
     : blogInfo.value.comments.slice(0, 3)
 );
 
-const likeOrUnlike = computed(() =>
-  blogInfo.value.likes.some((like) => like.user_id === user.user.id)
-    ? "Unlike Blog"
-    : "Like Blog"
-);
-
-const like = async () => {
-  try {
-    await getCSRF();
-    const data = await likeBlog({
-      user_id: user.user.id,
-      blog_id: blogInfo.value.id,
-    });
-    if (data.data.message === "Blog liked successfully") {
-      blogInfo.value.likes.push({
-        id: 38,
-        user_id: user.user.id,
-        blog_id: blogInfo.value.id,
-      });
-    } else {
-      blogInfo.value.likes = blogInfo.value.likes.filter(
-        (like) => like.user_id !== user.user.id
-      );
-    }
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 const getData = async (id) => {
   try {
     await getCSRF();
@@ -190,6 +147,20 @@ const getData = async (id) => {
     blogInfo.value = data.data;
   } catch (err) {
     push("/notFound");
+  }
+};
+
+const likeBlog = (removeOrAdd) => {
+  if (removeOrAdd) {
+    blogInfo.value.likes.push({
+      id: 38,
+      user_id: user.user.id,
+      blog_id: blogInfo.value.id,
+    });
+  } else {
+    blogInfo.value.likes = blogInfo.value.likes.filter(
+      (like) => like.user_id !== user.user.id
+    );
   }
 };
 
