@@ -61,7 +61,7 @@
                 @click="like"
                 v-if="user.user !== null"
               >
-                Like Blog
+                {{ likeOrUnlike }}
               </button>
             </div>
             <Form
@@ -151,6 +151,12 @@ const slicedComments = computed(() =>
   modals.value.isCommentsOpen
     ? blogInfo.value.comments
     : blogInfo.value.comments.slice(0, 3)
+);
+
+const likeOrUnlike = computed(() =>
+  blogInfo.value.likes.some((like) => like.user_id === user.user.id)
+    ? "Unlike Blog"
+    : "Like Blog"
 );
 
 const like = async () => {
