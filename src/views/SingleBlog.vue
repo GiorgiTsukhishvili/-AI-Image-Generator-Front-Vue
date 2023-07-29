@@ -29,7 +29,8 @@
             </div>
             <SubscribeCommon
               @subscribe="subscribe"
-              :subscriber_id="blogInfo.user.id"
+              :subscriber_id="user.user.id"
+              :subscribe_to="blogInfo.user.id"
               :subscribers="blogInfo.user.subscribers"
             />
           </div>
