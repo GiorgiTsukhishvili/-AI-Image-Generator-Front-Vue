@@ -118,7 +118,7 @@ import { useUserStore } from "@/stores";
 
 import { WrapperComponent, BlogComment, BlogLike } from "@/components";
 
-import { getSingleBlog, getCSRF } from "@/services";
+import { getSingleBlog, getCSRF, addComment } from "@/services";
 
 import { formatDate } from "@/helpers";
 
@@ -164,8 +164,22 @@ const likeBlog = (removeOrAdd) => {
   }
 };
 
-const handleSubmit = (values) => {
-  console.log(values);
+const handleSubmit = async (value) => {
+  await getCSRF();
+  const data = await addComment({
+    user_id: user.user.id,
+    blog_id: blogInfo.value.id,
+    comment: value.comment,
+  });
+
+  blogInfo.value.comments.unshift({
+    ...data.data,
+    user: {
+      id: user.user.id,
+      name: user.user.name,
+      image: user.user.image,
+    },
+  });
 };
 
 onMounted(() => {
