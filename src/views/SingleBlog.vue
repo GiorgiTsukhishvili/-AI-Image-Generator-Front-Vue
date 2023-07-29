@@ -8,18 +8,30 @@
           class="w-20 h-20 rounded-full"
         />
         <div class="md:ml-10 mt-10 md:mt-0">
-          <div
-            class="md:border-l-[3px] border-t-[3px] md:border-t-0 md:pl-10 pt-10 md:pt-0 border-black"
-          >
-            <h3 class="md:text-xl text-lg font-medium mb-2">
-              {{ formatDate(blogInfo.created_at) }}
-            </h3>
-            <RouterLink
-              :to="{ name: 'user', params: { name: blogInfo.user.name } }"
-              class="font-semibold md:text-2xl text-xl"
+          <div class="flex justify-between items-center">
+            <div
+              class="md:border-l-[3px] border-t-[3px] md:border-t-0 md:pl-10 pt-10 md:pt-0 border-black"
             >
-              {{ blogInfo.user.name }}
-            </RouterLink>
+              <h3 class="md:text-xl text-lg font-medium mb-2">
+                {{ formatDate(blogInfo.created_at) }}
+              </h3>
+              <div class="flex items-center gap-5">
+                <RouterLink
+                  :to="{ name: 'user', params: { name: blogInfo.user.name } }"
+                  class="font-semibold md:text-2xl text-xl"
+                >
+                  {{ blogInfo.user.name }}
+                </RouterLink>
+                <h4 class="text-sm md:text-base font-medium">
+                  Subscribers: {{ blogInfo.user.subscribers.length }}
+                </h4>
+              </div>
+            </div>
+            <SubscribeCommon
+              @subscribe="subscribe"
+              :subscriber_id="blogInfo.user.id"
+              :subscribers="blogInfo.user.subscribers"
+            />
           </div>
           <div class="flex items-center gap-3 my-8">
             <h3 class="md:text-xl text-lg font-medium">Collection:</h3>
@@ -100,6 +112,7 @@ import {
   BlogComment,
   BlogLike,
   BlogCreateComment,
+  SubscribeCommon,
 } from "@/components";
 
 import { getSingleBlog, getCSRF } from "@/services";
@@ -144,6 +157,14 @@ const likeBlog = (removeOrAdd) => {
     blogInfo.value.likes = blogInfo.value.likes.filter(
       (like) => like.user_id !== user.user.id
     );
+  }
+};
+
+const subscribe = (removeOrAdd) => {
+  if (removeOrAdd) {
+    blogInfo.value.user.subscribers_count++;
+  } else {
+    blogInfo.value.user.subscribers_count--;
   }
 };
 
