@@ -163,9 +163,14 @@ const likeBlog = (removeOrAdd) => {
 
 const subscribe = (removeOrAdd) => {
   if (removeOrAdd) {
-    blogInfo.value.user.subscribers_count++;
+    blogInfo.value.user.subscribers.push({
+      user_id: blogInfo.value.user.id,
+      subscribed_id: user.user.id,
+    });
   } else {
-    blogInfo.value.user.subscribers_count--;
+    blogInfo.value.user.subscribers = blogInfo.value.user.subscribers.filter(
+      (sub) => sub.subscribed_id !== user.user.id
+    );
   }
 };
 
