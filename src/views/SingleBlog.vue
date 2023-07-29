@@ -50,30 +50,10 @@
 
           <div class="mt-20 flex xl:flex-row flex-col gap-10">
             <BlogLike :blogInfo="blogInfo" @removeOrAdd="likeBlog" />
-            <Form
-              class="flex-1 flex flex-col gap-5 relative"
-              v-if="user.user !== null"
-              @submit="handleSubmit"
-            >
-              <label class="text-xl font-bold">Add Comment</label>
-              <Field
-                as="textArea"
-                name="comment"
-                id="comment"
-                cols="30"
-                rows="5"
-                :validate-on-input="true"
-                rules="required"
-                v-model="comment"
-                class="bg-none text-lg py-4 px-4 max-w-[600px] text-black border-2 border-gray-600 focus:ring-0 focus:outline-none rounded-md"
-              />
-              <button
-                v-if="comment.trim() !== ''"
-                class="text-lg font-semibold self-start absolute -bottom-10"
-              >
-                Comment
-              </button>
-            </Form>
+            <BlogCreateComment
+              @addNewComment="addNewComment"
+              :blogId="blogInfo.id"
+            />
           </div>
 
           <ul class="mt-20 pt-20 border-t-2 border-gray-400">
@@ -112,13 +92,17 @@
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { Field, Form } from "vee-validate";
 
 import { useUserStore } from "@/stores";
 
-import { WrapperComponent, BlogComment, BlogLike } from "@/components";
+import {
+  WrapperComponent,
+  BlogComment,
+  BlogLike,
+  BlogCreateComment,
+} from "@/components";
 
-import { getSingleBlog, getCSRF, addComment } from "@/services";
+import { getSingleBlog, getCSRF } from "@/services";
 
 import { formatDate } from "@/helpers";
 
@@ -131,7 +115,6 @@ const { push } = useRouter();
 
 const blogInfo = ref();
 const modals = ref({ imageWindow: false, isCommentsOpen: false });
-const comment = ref("");
 
 const slicedComments = computed(() =>
   modals.value.isCommentsOpen
@@ -164,16 +147,9 @@ const likeBlog = (removeOrAdd) => {
   }
 };
 
-const handleSubmit = async (value) => {
-  await getCSRF();
-  const data = await addComment({
-    user_id: user.user.id,
-    blog_id: blogInfo.value.id,
-    comment: value.comment,
-  });
-
+const addNewComment = (comment) => {
   blogInfo.value.comments.unshift({
-    ...data.data,
+    ...comment,
     user: {
       id: user.user.id,
       name: user.user.name,
