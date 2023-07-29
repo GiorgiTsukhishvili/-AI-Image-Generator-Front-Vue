@@ -28,6 +28,7 @@
               </div>
             </div>
             <SubscribeCommon
+              v-if="user.user !== null && user.user.id !== blogInfo.user.id"
               @subscribe="subscribe"
               :subscriber_id="user.user.id"
               :subscribe_to="blogInfo.user.id"
