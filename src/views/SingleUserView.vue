@@ -8,21 +8,32 @@
   <div v-if="userInfo" class="bg-neutral-100 min-h-screen pb-40 pt-60">
     <WrapperComponent>
       <div class="flex flex-col items-start w-full">
-        <div class="flex gap-10 sm:flex-row flex-col">
+        <div class="flex gap-10 sm:flex-row flex-col w-full">
           <img
             :src="userInfo.image"
             alt="user image"
             class="w-44 h-44 rounded-full z-10"
           />
-          <div class="z-10 flex flex-col justify-end">
-            <h1 class="md:text-3xl text-2xl font-semibold">
-              {{ userInfo.name }}
-            </h1>
-            <h3 class="md:text-2xl text-lg font-medium mt-3">
-              <span class="font-semibold">@{{ userInfo.name }}</span>
-              Subscribers: {{ userInfo.subscribers_count }} Blogs:
-              {{ userInfo.blogs_count }}
-            </h3>
+          <div class="z-10 flex flex-row justify-between w-full">
+            <div class="flex flex-col justify-end">
+              <h1 class="md:text-3xl text-2xl font-semibold">
+                {{ userInfo.name }}
+              </h1>
+              <h3 class="md:text-2xl text-lg font-medium mt-3">
+                <span class="font-semibold">@{{ userInfo.name }}</span>
+                Subscribers: {{ userInfo.subscribers.length }} Blogs:
+                {{ userInfo.blogs_count }}
+              </h3>
+            </div>
+            <span class="self-end">
+              <SubscribeCommon
+                v-if="user.user !== null && user.user.id !== userInfo.id"
+                @subscribe="subscribe"
+                :subscriber_id="user.user.id"
+                :subscribe_to="userInfo.id"
+                :subscribers="userInfo.subscribers"
+              />
+            </span>
           </div>
         </div>
         <p
@@ -92,7 +103,11 @@ import { useRoute, useRouter } from "vue-router";
 
 import { getDesiredUser, getCSRF } from "@/services";
 
-import { WrapperComponent, TextArrowIcon } from "@/components";
+import { WrapperComponent, TextArrowIcon, SubscribeCommon } from "@/components";
+
+import { useUserStore } from "@/stores";
+
+const user = useUserStore();
 
 const userInfo = ref();
 const enlargeDescription = ref(false);
@@ -110,6 +125,19 @@ const getUserInfo = async (name) => {
     userInfo.value = data.data;
   } catch (err) {
     push("/notFound");
+  }
+};
+
+const subscribe = (removeOrAdd) => {
+  if (removeOrAdd) {
+    userInfo.value.subscribers.push({
+      user_id: userInfo.value.id,
+      subscribed_id: user.user.id,
+    });
+  } else {
+    userInfo.value.subscribers = userInfo.value.subscribers.filter(
+      (sub) => sub.subscribed_id !== user.user.id
+    );
   }
 };
 
