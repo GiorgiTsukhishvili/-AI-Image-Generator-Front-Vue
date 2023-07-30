@@ -1,7 +1,10 @@
 <template>
   <div class="flex justify-between items-center flex-col gap-10">
     <RouterLink
-      :to="{ name: 'blog', params: { id: props.blog.id } }"
+      :to="{
+        name: 'blog',
+        params: { id: props.blog.id, name: props.blog.title },
+      }"
       class="w-full"
     >
       <img
@@ -20,13 +23,19 @@
       </ul>
       <RouterLink
         class="md:text-3xl text-2xl font-bold mt-5"
-        :to="{ name: 'blog', params: { id: props.blog.id } }"
+        :to="{
+          name: 'blog',
+          params: { id: props.blog.id, name: props.blog.title },
+        }"
       >
         {{ props.blog.title }}
       </RouterLink>
       <RouterLink
         class="mt-5 md:text-xl text-gray-500"
-        :to="{ name: 'blog', params: { id: props.blog.id } }"
+        :to="{
+          name: 'blog',
+          params: { id: props.blog.id, name: props.blog.title },
+        }"
       >
         {{ props.blog.description.slice(0, 180) }}...
         <ArrowRightIcon />

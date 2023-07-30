@@ -1,6 +1,6 @@
 <template>
   <RouterLink
-    :to="{ name: 'blog', params: { id: props.id } }"
+    :to="{ name: 'blog', params: { id: props.id, name: props.title } }"
     class="flex justify-start items-center flex-col gap-10 flex-1 min-w-[300px] max-w-[600px]"
   >
     <img
