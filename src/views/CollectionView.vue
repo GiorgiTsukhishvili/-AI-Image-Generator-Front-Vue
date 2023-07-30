@@ -8,16 +8,30 @@
             :alt="collectionInfo.user.name"
             class="w-24 h-24 rounded-full"
           />
-          <RouterLink
-            :to="{ name: 'user', params: { name: collectionInfo.user.name } }"
-          >
-            <h2 class="text-2xl font-bold">{{ collectionInfo.user.name }}</h2>
-            <h3 class="mt-5 text-xl font-medium">
-              <span class="font-semibold">@{{ collectionInfo.user.name }}</span>
-              Subscribers: {{ collectionInfo.user.subscribers_count }} Blogs:
-              {{ collectionInfo.user.blogs_count }}
-            </h3>
-          </RouterLink>
+          <div class="flex justify-between items-center w-full">
+            <RouterLink
+              :to="{ name: 'user', params: { name: collectionInfo.user.name } }"
+            >
+              <h2 class="text-2xl font-bold">{{ collectionInfo.user.name }}</h2>
+              <h3 class="mt-5 text-xl font-medium">
+                <span class="font-semibold"
+                  >@{{ collectionInfo.user.name }}</span
+                >
+                Subscribers: {{ collectionInfo.user.subscribers.length }} Blogs:
+                {{ collectionInfo.user.blogs_count }}
+              </h3>
+            </RouterLink>
+            <SubscribeCommon
+              v-if="
+                loginUser.user !== null &&
+                loginUser.user.id !== collectionInfo.user.id
+              "
+              @subscribe="subscribe"
+              :subscriber_id="loginUser.user.id"
+              :subscribe_to="collectionInfo.user.id"
+              :subscribers="collectionInfo.user.subscribers"
+            />
+          </div>
         </div>
         <h1 class="md:text-3xl text-2xl font-semibold">
           Collection : {{ collectionInfo.name }}
@@ -43,7 +57,15 @@ import { useRoute, useRouter } from "vue-router";
 
 import { getCSRF, getDesiredCollection } from "@/services";
 
-import { WrapperComponent, CollectionBlog } from "@/components";
+import {
+  WrapperComponent,
+  CollectionBlog,
+  SubscribeCommon,
+} from "@/components";
+
+import { useUserStore } from "@/stores";
+
+const loginUser = useUserStore();
 
 const {
   params: { user },
@@ -61,6 +83,20 @@ const getCollection = async (user, query) => {
     collectionInfo.value = data.data;
   } catch (err) {
     push("/notFound");
+  }
+};
+
+const subscribe = (removeOrAdd) => {
+  if (removeOrAdd) {
+    collectionInfo.value.user.subscribers.push({
+      user_id: collectionInfo.value.user.id,
+      subscribed_id: loginUser.user.id,
+    });
+  } else {
+    collectionInfo.value.user.subscribers =
+      collectionInfo.value.user.subscribers.filter(
+        (sub) => sub.subscribed_id !== loginUser.user.id
+      );
   }
 };
 
