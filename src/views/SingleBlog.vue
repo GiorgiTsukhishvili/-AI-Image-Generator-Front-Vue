@@ -50,6 +50,16 @@
           <h1 class="mt-10 font-bold md:text-3xl text-2xl">
             {{ blogInfo.title }}
           </h1>
+          <ul class="flex gap-5 mt-5">
+            <li
+              :style="randColor()"
+              class="px-4 py-2 rounded-md flex justify-center items-center"
+              v-for="tag in blogInfo.tags"
+              :key="tag.id"
+            >
+              {{ tag.name }}
+            </li>
+          </ul>
           <img
             :src="blogInfo.image"
             alt="blog image"
@@ -90,7 +100,10 @@
       </div>
     </WrapperComponent>
   </div>
-  <div v-if="modals.imageWindow" class="fixed top-0 left-0 h-screen w-screen">
+  <div
+    v-if="modals.imageWindow"
+    class="fixed top-0 left-0 h-screen w-screen z-10"
+  >
     <div
       class="bg-black absolute top-0 left-0 h-screen w-screen bg-opacity-60 blur-xl"
       @click="() => (modals.imageWindow = false)"
@@ -119,7 +132,7 @@ import {
 
 import { getSingleBlog, getCSRF } from "@/services";
 
-import { formatDate } from "@/helpers";
+import { formatDate, randColor } from "@/helpers";
 
 const user = useUserStore();
 
