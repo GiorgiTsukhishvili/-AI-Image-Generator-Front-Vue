@@ -20,9 +20,7 @@
               Sign Up
             </button>
           </div>
-          <div v-else>
-            <button @click="logout">logout</button>
-          </div>
+          <NavbarUser v-else :userInfo="user" />
         </div>
       </div>
     </WrapperComponent>
@@ -44,13 +42,12 @@
 <script setup>
 import { ref, watchEffect } from "vue";
 
-import { logoutUser, getCSRF } from "@/services";
-
 import {
   LoginForm,
   WrapperComponent,
   RegisterForm,
   ForgotPasswordForm,
+  NavbarUser,
 } from "@/components";
 
 import { useUserStore } from "@/stores";
@@ -58,16 +55,6 @@ import { useUserStore } from "@/stores";
 const whichModalOpen = ref("");
 
 const user = useUserStore();
-
-const logout = async () => {
-  try {
-    await getCSRF();
-    await logoutUser();
-    user.setUserInfo(null);
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 const changeModal = (modal) => (whichModalOpen.value = modal);
 
