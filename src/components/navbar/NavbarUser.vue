@@ -15,7 +15,12 @@
       class="w-[300px] rounded-md z-50 px-6 py-6 bg-white absolute duration-500 origin-top top-24 shadow-xl right-0"
       :style="{ transform: dropdown ? 'scaleY(1)' : 'scaleY(0)' }"
     >
-      <button @click="logout" class="text-xl font-semibold">Logout</button>
+      <button
+        @click="logout"
+        class="text-2xl font-semibold flex items-center gap-3"
+      >
+        Logout <LogoutIcon />
+      </button>
     </div>
   </div>
 </template>
@@ -24,6 +29,8 @@
 import { ref } from "vue";
 
 import { logoutUser, getCSRF } from "@/services";
+
+import { LogoutIcon } from "@/components";
 
 const props = defineProps({ userInfo: { required: true } });
 
