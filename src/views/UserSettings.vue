@@ -1,40 +1,27 @@
 <template>
-  <div v-if="userInfo.user" class="bg-neutral-100 min-h-screen py-40">
+  <div v-if="user.user" class="bg-neutral-100 min-h-screen py-40">
     <WrapperComponent>
-      <Form class="flex flex-col items-center w-full" @submit="handleSubmit">
-        <div class="w-[300px] h-[300px] rounded-full relative">
-          <img
-            :src="userInfo.user.image"
-            :alt="userInfo.user.name + ' image'"
-            class="w-[300px] h-[300px] rounded-full absolute top-0 left-0 opacity-90"
-          />
-          <Field
-            type="file"
-            name="image"
-            class="opacity-0 z-[2] absolute top-0 left-0 w-[300px] h-[300px] rounded-full"
-          />
-          <span
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z[1]"
-          >
-            <CameraIcon />
-          </span>
+      <div class="flex gap-10 w-full">
+        <ul class="min-w-fit text-2xl font-medium gap-7 flex flex-col">
+          <li @click="() => (navigation = 'information')">User Information</li>
+          <li @click="() => (navigation = 'security')">Security</li>
+        </ul>
+        <div class="flex flex-col items-center w-full">
+          <UserInfo v-if="navigation === 'information'" />
         </div>
-        <button>Save changes</button>
-      </Form>
+      </div>
     </WrapperComponent>
   </div>
 </template>
 
 <script setup>
+import { ref } from "vue";
+
 import { useUserStore } from "@/stores";
 
-import { Field, Form } from "vee-validate";
+import { WrapperComponent, UserInfo } from "@/components";
 
-import { WrapperComponent, CameraIcon } from "@/components";
+const navigation = ref("information");
 
-const userInfo = useUserStore();
-console.log(userInfo.user);
-const handleSubmit = (data) => {
-  console.log(data);
-};
+const user = useUserStore();
 </script>
