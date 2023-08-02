@@ -5,6 +5,7 @@
 
 <script setup>
 import { onBeforeMount } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import { NavbarComponent } from "@/components";
 
@@ -14,6 +15,11 @@ import { useUserStore } from "@/stores";
 
 const { setUserInfo } = useUserStore();
 
+const { path } = useRoute();
+const { push } = useRouter();
+
+const userRoutes = ["/settings"];
+
 const getUserInforMation = async () => {
   try {
     await getCSRF();
@@ -21,6 +27,10 @@ const getUserInforMation = async () => {
     setUserInfo(data.data);
   } catch (err) {
     setUserInfo(null);
+
+    if (userRoutes.some((route) => route.includes(path))) {
+      push("/");
+    }
   }
 };
 

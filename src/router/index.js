@@ -5,6 +5,7 @@ import {
   NotFound,
   SingleUserView,
   CollectionView,
+  UserSettings,
 } from "@/views";
 
 const router = createRouter({
@@ -14,6 +15,11 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+    },
+    {
+      path: "/settings",
+      name: "settings",
+      component: UserSettings,
     },
     {
       path: "/blog/:name/:id",
