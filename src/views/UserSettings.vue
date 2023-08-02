@@ -3,7 +3,7 @@
     <WrapperComponent>
       <div class="flex gap-10 w-full lg:flex-row flex-col">
         <ul
-          class="min-w-fit text-2xl uppercase font-medium gap-7 flex flex-col"
+          class="min-w-fit text-2xl uppercase font-medium gap-7 flex flex-col mt-20"
         >
           <li
             class="flex items-center"

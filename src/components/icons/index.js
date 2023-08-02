@@ -7,3 +7,4 @@ export { default as LogoutIcon } from "./LogoutIcon.vue";
 export { default as CameraIcon } from "./CameraIcon.vue";
 export { default as SecurityIcon } from "./SecurityIcon.vue";
 export { default as UserInformationIcon } from "./UserInformationIcon.vue";
+export { default as EditIcon } from "./EditIcon.vue";
