@@ -86,6 +86,8 @@ import { useUserStore } from "@/stores";
 
 import { CameraIcon, EditIcon } from "@/components";
 
+import { updateUser } from "@/services";
+
 const userInfo = useUserStore();
 
 const userImages = ref({
@@ -103,7 +105,15 @@ const handleFileUpload = (data, field) => {
 
 const createUrl = (url) => URL.createObjectURL(url);
 
-const handleSubmit = (data) => {
-  console.log(data);
+const handleSubmit = async (info) => {
+  const data = new FormData();
+  data.append("image", userImages.value.image);
+  data.append("background_image", userImages.value.background_image);
+  data.append("name", info.name);
+  data.append("description", info.description);
+
+  const newUserInfo = await updateUser(userInfo.user.id, data);
+
+  userInfo.setUserInfo(newUserInfo.data);
 };
 </script>
