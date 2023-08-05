@@ -41,13 +41,46 @@
         <CameraIcon />
       </span>
     </div>
-    <button>Save changes</button>
+    <div class="max-w-[600px] w-full">
+      <label class="text-base md:text-lg block mb-2" for="name">Username</label>
+      <Field
+        name="name"
+        type="text"
+        rules="required|min:3"
+        :validate-on-input="true"
+        class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-3"
+        placeholder="Enter new username"
+        :value="userInfo.user.name"
+      />
+      <span class="h-4 inline-block">
+        <ErrorMessage name="name" class="text-red-600 h-4" />
+      </span>
+
+      <label class="text-base md:text-lg block mb-2" for="description"
+        >Description</label
+      >
+      <Field
+        as="textarea"
+        name="description"
+        rules="required|min:3"
+        :validate-on-input="true"
+        cols="30"
+        rows="5"
+        class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-3"
+        :value="userInfo.user.description"
+      />
+
+      <span class="h-4 inline-block">
+        <ErrorMessage name="description" class="text-red-600 h-4" />
+      </span>
+    </div>
+    <button class="text-2xl font-medium">Save changes</button>
   </Form>
 </template>
 
 <script setup>
 import { ref } from "vue";
-import { Field, Form } from "vee-validate";
+import { Field, Form, ErrorMessage } from "vee-validate";
 
 import { useUserStore } from "@/stores";
 
