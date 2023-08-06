@@ -7,6 +7,7 @@ import {
   CollectionView,
   UserSettings,
   UserCollections,
+  UserBlogs,
 } from "@/views";
 
 const router = createRouter({
@@ -23,9 +24,14 @@ const router = createRouter({
       component: UserSettings,
     },
     {
-      path: "/user-collection",
-      name: "user-collection",
+      path: "/user-collections",
+      name: "user-collections",
       component: UserCollections,
+    },
+    {
+      path: "/user-blogs",
+      name: "user-blogs",
+      component: UserBlogs,
     },
     {
       path: "/blog/:name/:id",
