@@ -6,6 +6,7 @@ import {
   SingleUserView,
   CollectionView,
   UserSettings,
+  UserCollections,
 } from "@/views";
 
 const router = createRouter({
@@ -20,6 +21,11 @@ const router = createRouter({
       path: "/settings",
       name: "settings",
       component: UserSettings,
+    },
+    {
+      path: "/user-collection",
+      name: "user-collection",
+      component: UserCollections,
     },
     {
       path: "/blog/:name/:id",
