@@ -18,7 +18,7 @@ const { setUserInfo } = useUserStore();
 const { path } = useRoute();
 const { push } = useRouter();
 
-const userRoutes = ["/settings"];
+const userRoutes = ["/settings", "/user-collection"];
 
 const getUserInforMation = async () => {
   try {

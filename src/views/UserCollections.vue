@@ -6,4 +6,23 @@
 
 <script setup>
 import { WrapperComponent } from "@/components";
+
+import { useUserStore } from "@/stores";
+
+const user = useUserStore();
+
+import { getUserCollections } from "@/services";
+import { watchEffect } from "vue";
+
+const userCollections = async () => {
+  const data = await getUserCollections();
+
+  console.log(data.data);
+};
+
+watchEffect(() => {
+  if (user.user) {
+    userCollections();
+  }
+});
 </script>
