@@ -79,7 +79,7 @@ const getCollection = async (user, query) => {
   try {
     await getCSRF();
     const data = await getDesiredCollection(user, query);
-    console.log(data.data);
+
     collectionInfo.value = data.data;
   } catch (err) {
     push("/notFound");

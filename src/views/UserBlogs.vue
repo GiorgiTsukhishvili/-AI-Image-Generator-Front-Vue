@@ -5,5 +5,17 @@
 </template>
 
 <script setup>
+import { onMounted } from "vue";
+
 import { WrapperComponent } from "@/components";
+
+import { getUserBlogs } from "@/services";
+
+const getBlogs = async () => {
+  const data = await getUserBlogs();
+
+  console.log(data.data);
+};
+
+onMounted(() => getBlogs());
 </script>
