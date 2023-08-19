@@ -5,17 +5,27 @@
 </template>
 
 <script setup>
-import { onMounted } from "vue";
+import { watchEffect, ref } from "vue";
 
 import { WrapperComponent } from "@/components";
 
 import { getUserBlogs } from "@/services";
 
+import { useUserStore } from "@/stores";
+
+const blogs = ref([]);
+
+const user = useUserStore();
+
 const getBlogs = async () => {
   const data = await getUserBlogs();
 
-  console.log(data.data);
+  blogs.value = data.data;
 };
 
-onMounted(() => getBlogs());
+watchEffect(() => {
+  if (user.user) {
+    getBlogs();
+  }
+});
 </script>
