@@ -1,13 +1,23 @@
 <template>
   <div class="bg-neutral-100 min-h-screen pb-40 pt-60">
-    <WrapperComponent></WrapperComponent>
+    <WrapperComponent>
+      <ul class="mt-16 flex flex-wrap gap-20">
+        <CollectionBlog
+          v-for="blog in blogs"
+          :key="blog.id"
+          :title="blog.title"
+          :image="blog.image"
+          :id="blog.id"
+        />
+      </ul>
+    </WrapperComponent>
   </div>
 </template>
 
 <script setup>
 import { watchEffect, ref } from "vue";
 
-import { WrapperComponent } from "@/components";
+import { WrapperComponent, CollectionBlog } from "@/components";
 
 import { getUserBlogs } from "@/services";
 
