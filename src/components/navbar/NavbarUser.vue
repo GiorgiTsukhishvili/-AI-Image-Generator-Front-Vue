@@ -19,6 +19,11 @@
         class="text-2xl font-semibold"
         >My Collections</RouterLink
       >
+      <RouterLink
+        :to="{ name: 'user-subscriptions' }"
+        class="text-2xl font-semibold"
+        >My Subscriptions</RouterLink
+      >
       <RouterLink :to="{ name: 'settings' }" class="text-2xl font-semibold"
         >Settings</RouterLink
       >

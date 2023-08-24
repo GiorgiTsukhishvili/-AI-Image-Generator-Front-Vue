@@ -8,6 +8,7 @@ import {
   UserSettings,
   UserCollections,
   UserBlogs,
+  UserSubscriptions,
 } from "@/views";
 
 const router = createRouter({
@@ -27,6 +28,11 @@ const router = createRouter({
       path: "/user-collections",
       name: "user-collections",
       component: UserCollections,
+    },
+    {
+      path: "/user-subscriptions",
+      name: "user-subscriptions",
+      component: UserSubscriptions,
     },
     {
       path: "/user-blogs",
