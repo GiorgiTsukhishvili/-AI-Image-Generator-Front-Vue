@@ -1,5 +1,5 @@
 <template>
-  <div @focusout="() => (dropdown = false)" tabindex="0" class="relative">
+  <div class="relative">
     <img
       :src="props.userInfo.user.image"
       :alt="props.userInfo.user.name + ' image'"
@@ -10,6 +10,7 @@
     <div
       class="md:w-[300px] gap-5 flex flex-col md:justify-start justify-center md:items-start items-center md:h-auto h-screen w-screen rounded-md z-50 px-6 py-6 bg-white md:absolute fixed duration-500 origin-top md:top-24 top-0 shadow-xl right-0"
       :style="{ transform: dropdown ? 'scaleY(1)' : 'scaleY(0)' }"
+      @mouseleave="() => (dropdown = false)"
     >
       <RouterLink :to="{ name: 'user-blogs' }" class="text-2xl font-semibold"
         >My Blogs</RouterLink

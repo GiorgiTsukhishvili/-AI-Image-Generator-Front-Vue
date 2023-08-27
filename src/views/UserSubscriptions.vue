@@ -13,6 +13,7 @@
           >
             <RouterLink
               :to="{ name: 'user', params: { name: subscriber.user.name } }"
+              class="flex flex-col items-center"
             >
               <img
                 :src="subscriber.user.image"
@@ -50,7 +51,7 @@ const subscribers = ref([]);
 
 const userSubscribers = async () => {
   const data = await userSubscribes();
-  console.log(data.data.subscribers);
+
   subscribers.value = data.data.subscribers;
 };
 
