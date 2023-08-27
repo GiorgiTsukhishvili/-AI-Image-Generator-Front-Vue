@@ -1,16 +1,18 @@
 <template>
   <div class="bg-neutral-100 min-h-screen pb-40 pt-60">
     <WrapperComponent>
-      <h1 class="md:text-3xl text-2xl font-semibold">My Blogs:</h1>
-      <ul class="mt-16 flex flex-wrap gap-20">
-        <CollectionBlog
-          v-for="blog in blogs"
-          :key="blog.id"
-          :title="blog.title"
-          :image="blog.image"
-          :id="blog.id"
-        />
-      </ul>
+      <div>
+        <h1 class="md:text-4xl text-2xl font-semibold">My Blogs:</h1>
+        <ul class="mt-16 flex flex-wrap gap-20">
+          <CollectionBlog
+            v-for="blog in blogs"
+            :key="blog.id"
+            :title="blog.title"
+            :image="blog.image"
+            :id="blog.id"
+          />
+        </ul>
+      </div>
     </WrapperComponent>
   </div>
 </template>
