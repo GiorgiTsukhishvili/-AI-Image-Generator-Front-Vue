@@ -44,13 +44,13 @@ import { ref, watchEffect } from "vue";
 
 import { WrapperComponent } from "@/components";
 
-import { userSubscribes, getCSRF, addSubscribe } from "@/services";
+import { userSubscribers, getCSRF, addSubscribe } from "@/services";
 
 const user = useUserStore();
 const subscribers = ref([]);
 
-const userSubscribers = async () => {
-  const data = await userSubscribes();
+const userSubscribes = async () => {
+  const data = await userSubscribers();
 
   subscribers.value = data.data.subscribers;
 };
@@ -70,7 +70,7 @@ const subscribeOrUnsubscribe = async (unsubscribeId) => {
 
 watchEffect(() => {
   if (user.user) {
-    userSubscribers();
+    userSubscribes();
   }
 });
 </script>

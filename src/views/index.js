@@ -7,3 +7,4 @@ export { default as UserSettings } from "./UserSettings.vue";
 export { default as UserCollections } from "./UserCollections.vue";
 export { default as UserBlogs } from "./UserBlogs.vue";
 export { default as UserSubscriptions } from "./UserSubscriptions.vue";
+export { default as UserSubscribers } from "./UserSubscribers.vue";
