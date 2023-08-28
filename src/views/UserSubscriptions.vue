@@ -44,13 +44,13 @@ import { ref, watchEffect } from "vue";
 
 import { WrapperComponent } from "@/components";
 
-import { userSubscribers, getCSRF, addSubscribe } from "@/services";
+import { userSubscriptions, getCSRF, addSubscribe } from "@/services";
 
 const user = useUserStore();
 const subscribers = ref([]);
 
 const userSubscribes = async () => {
-  const data = await userSubscribers();
+  const data = await userSubscriptions();
 
   subscribers.value = data.data.subscribers;
 };
