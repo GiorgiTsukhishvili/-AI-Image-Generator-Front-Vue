@@ -22,6 +22,7 @@ const userRoutes = [
   "/settings",
   "/user-collection",
   "/user-subscriptions",
+  "/user-subscribers",
   "/user-blogs",
 ];
 
