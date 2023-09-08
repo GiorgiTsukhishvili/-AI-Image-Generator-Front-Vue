@@ -58,12 +58,13 @@
 import { Form } from "vee-validate";
 import { ref } from "vue";
 import { FormInput, CloseIcon } from "@/components";
+import { createUser } from "@/services";
 
 const emits = defineEmits(["changeModal"]);
 
 const registerFields = [
   {
-    name: "username",
+    name: "name",
     type: "text",
     placeholder: "Input Your Username",
     rules: "required|min:3",
@@ -90,7 +91,11 @@ const registerFields = [
 
 const inputFields = ref(registerFields);
 
-const handleSubmit = (values) => {
-  console.log(values);
+const handleSubmit = async (values) => {
+  try {
+    await createUser(values);
+  } catch (err) {
+    console.log(err);
+  }
 };
 </script>
