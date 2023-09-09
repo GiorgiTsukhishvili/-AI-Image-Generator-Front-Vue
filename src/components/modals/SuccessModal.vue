@@ -18,9 +18,9 @@
       <div
         class="flex items-center gap-10 justify-center pt-10 w-full h-full px-10 md:flex-row flex-col"
       >
-        <AirplaneIcon />
+        <SuccessIcon />
         <h2 class="text-3xl text-center">
-          Registration link sent, please check your email
+          {{ props.text }}
         </h2>
       </div>
     </div>
@@ -28,7 +28,9 @@
 </template>
 
 <script setup>
-import { AirplaneIcon, CloseIcon } from "@/components";
+import { CloseIcon, SuccessIcon } from "@/components";
 
 const emits = defineEmits(["changeModal"]);
+
+const props = defineProps({ text: { required: true, type: String } });
 </script>

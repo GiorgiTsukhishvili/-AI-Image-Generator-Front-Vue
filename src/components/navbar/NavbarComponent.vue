@@ -41,6 +41,11 @@
     v-if="whichModalOpen === 'registration-sent'"
     @changeModal="(modalState) => changeModal(modalState)"
   />
+  <SuccessModal
+    v-if="whichModalOpen === 'success'"
+    @changeModal="(modalState) => changeModal(modalState)"
+    :text="successModalText"
+  />
 </template>
 
 <script setup>
@@ -57,11 +62,15 @@ import {
   ForgotPasswordForm,
   NavbarUser,
   RegistrationSentModal,
+  SuccessModal,
 } from "@/components";
 
 import { useUserStore } from "@/stores";
+import { axios } from "@/services";
 
 const whichModalOpen = ref("");
+
+const successModalText = ref("");
 
 const user = useUserStore();
 
@@ -77,6 +86,20 @@ watchEffect(() => {
 
 onMounted(async () => {
   await router.isReady();
-  console.log(route.query.type === "register");
+  const { query } = route;
+  if (query.type) {
+    if (query.type === "register") {
+      const link = `${query["register-link"]}&token=${query.token}&signature=${query.signature}`;
+      try {
+        await axios.get(link);
+        whichModalOpen.value = "success";
+        successModalText.value = "Email verified successfully";
+      } catch (_) {
+        router.push("/");
+      }
+    }
+
+    console.log();
+  }
 });
 </script>
