@@ -34,7 +34,7 @@ const getUserInforMation = async () => {
   } catch (err) {
     setUserInfo(null);
 
-    if (userRoutes.some((route) => route.includes(path))) {
+    if (userRoutes.some((route) => route.includes(path)) && path !== "/") {
       push("/");
     }
   }

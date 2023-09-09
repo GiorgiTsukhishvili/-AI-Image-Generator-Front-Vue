@@ -37,10 +37,18 @@
     v-if="whichModalOpen === 'forgot-password'"
     @changeModal="(modalState) => changeModal(modalState)"
   />
+  <RegistrationSentModal
+    v-if="whichModalOpen === 'registration-sent'"
+    @changeModal="(modalState) => changeModal(modalState)"
+  />
 </template>
 
 <script setup>
-import { ref, watchEffect } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
+import { useRoute, useRouter } from "vue-router";
+
+const router = useRouter();
+const route = useRoute();
 
 import {
   LoginForm,
@@ -48,6 +56,7 @@ import {
   RegisterForm,
   ForgotPasswordForm,
   NavbarUser,
+  RegistrationSentModal,
 } from "@/components";
 
 import { useUserStore } from "@/stores";
@@ -64,5 +73,10 @@ watchEffect(() => {
   } else {
     document.body.style.overflow = "unset";
   }
+});
+
+onMounted(async () => {
+  await router.isReady();
+  console.log(route.query.type === "register");
 });
 </script>
