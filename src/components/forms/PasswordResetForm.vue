@@ -65,7 +65,7 @@ const registerFields = [
     name: "password_confirmation",
     type: "password",
     placeholder: "Input Repeat Password",
-    rules: "required|min:8",
+    rules: "required|min:8|confirmed:password",
   },
 ];
 
