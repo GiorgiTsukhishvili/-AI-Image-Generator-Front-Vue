@@ -62,6 +62,8 @@ import { Form } from "vee-validate";
 import { ref } from "vue";
 import { FormInput, CloseIcon } from "@/components";
 
+import { emailPassword } from "@/services";
+
 const emits = defineEmits(["changeModal"]);
 
 const ForgotPasswordFields = [
@@ -75,7 +77,11 @@ const ForgotPasswordFields = [
 
 const inputFields = ref(ForgotPasswordFields);
 
-const handleSubmit = (values) => {
-  console.log(values);
+const handleSubmit = async (values) => {
+  try {
+    await emailPassword(values);
+  } catch (err) {
+    console.log(err);
+  }
 };
 </script>
