@@ -31,15 +31,16 @@
   />
   <RegisterForm
     v-if="whichModalOpen === 'register'"
-    @changeModal="(modalState) => changeModal(modalState)"
+    @changeModal="(modalState, text) => changeModal(modalState, text)"
   />
   <ForgotPasswordForm
     v-if="whichModalOpen === 'forgot-password'"
-    @changeModal="(modalState) => changeModal(modalState)"
+    @changeModal="(modalState, text) => changeModal(modalState, text)"
   />
-  <RegistrationSentModal
-    v-if="whichModalOpen === 'registration-sent'"
+  <EmailSentModal
+    v-if="whichModalOpen === 'modal-sent'"
     @changeModal="(modalState) => changeModal(modalState)"
+    :text="emailSentText"
   />
   <SuccessModal
     v-if="whichModalOpen === 'success'"
@@ -61,7 +62,7 @@ import {
   RegisterForm,
   ForgotPasswordForm,
   NavbarUser,
-  RegistrationSentModal,
+  EmailSentModal,
   SuccessModal,
 } from "@/components";
 
@@ -72,9 +73,14 @@ const whichModalOpen = ref("");
 
 const successModalText = ref("");
 
+const emailSentText = ref("");
+
 const user = useUserStore();
 
-const changeModal = (modal) => (whichModalOpen.value = modal);
+const changeModal = (modal, text = "") => {
+  whichModalOpen.value = modal;
+  emailSentText.value = text;
+};
 
 watchEffect(() => {
   if (whichModalOpen.value !== "") {

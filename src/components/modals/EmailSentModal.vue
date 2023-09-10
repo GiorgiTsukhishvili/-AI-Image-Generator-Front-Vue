@@ -20,7 +20,7 @@
       >
         <AirplaneIcon />
         <h2 class="text-3xl text-center">
-          Registration link sent, please check your email
+          {{ props.text }}
         </h2>
       </div>
     </div>
@@ -31,4 +31,6 @@
 import { AirplaneIcon, CloseIcon } from "@/components";
 
 const emits = defineEmits(["changeModal"]);
+
+const props = defineProps({ text: { required: true, type: String } });
 </script>

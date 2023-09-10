@@ -80,6 +80,12 @@ const inputFields = ref(ForgotPasswordFields);
 const handleSubmit = async (values) => {
   try {
     await emailPassword(values);
+
+    emits(
+      "changeModal",
+      "modal-sent",
+      "Password update link sent, please check your email"
+    );
   } catch (err) {
     console.log(err);
   }

@@ -94,7 +94,11 @@ const inputFields = ref(registerFields);
 const handleSubmit = async (values) => {
   try {
     await createUser(values);
-    emits("changeModal", "registration-sent")();
+    emits(
+      "changeModal",
+      "modal-sent",
+      "Registration link sent, please check your email"
+    );
   } catch (err) {
     console.log(err);
   }
