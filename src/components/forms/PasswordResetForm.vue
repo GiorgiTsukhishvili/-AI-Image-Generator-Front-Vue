@@ -46,8 +46,11 @@
 <script setup>
 import { Form } from "vee-validate";
 import { ref } from "vue";
+
+import { useRoute } from "vue-router";
+
 import { FormInput, CloseIcon } from "@/components";
-import { createUser } from "@/services";
+import { axios } from "@/services";
 
 const emits = defineEmits(["sentModalUpdate"]);
 
@@ -68,9 +71,13 @@ const registerFields = [
 
 const inputFields = ref(registerFields);
 
+const { query } = useRoute();
+
 const handleSubmit = async (values) => {
+  const link = `${query["reset-link"]}&token=${query.token}&signature=${query.signature}`;
   try {
-    await createUser(values);
+    await axios.post(link, values);
+
     emits("sentModalUpdate", "success", "Password updated successfully");
   } catch (err) {
     console.log(err);
