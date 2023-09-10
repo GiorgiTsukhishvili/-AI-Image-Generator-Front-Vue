@@ -33,6 +33,10 @@
     v-if="whichModalOpen === 'register'"
     @changeModal="(modalState, text) => changeModal(modalState, text)"
   />
+  <PasswordResetForm
+    v-if="whichModalOpen === 'password-reset'"
+    @sentModalUpdate="(modalState, text) => sentModalUpdate(modalState, text)"
+  />
   <ForgotPasswordForm
     v-if="whichModalOpen === 'forgot-password'"
     @changeModal="(modalState, text) => changeModal(modalState, text)"
@@ -64,6 +68,7 @@ import {
   NavbarUser,
   EmailSentModal,
   SuccessModal,
+  PasswordResetForm,
 } from "@/components";
 
 import { useUserStore } from "@/stores";
@@ -80,6 +85,11 @@ const user = useUserStore();
 const changeModal = (modal, text = "") => {
   whichModalOpen.value = modal;
   emailSentText.value = text;
+};
+
+const sentModalUpdate = (modal, text = "") => {
+  whichModalOpen.value = modal;
+  successModalText.value = text;
 };
 
 watchEffect(() => {
@@ -105,7 +115,9 @@ onMounted(async () => {
       }
     }
 
-    console.log();
+    if (query.type === "reset") {
+      whichModalOpen.value = "password-reset";
+    }
   }
 });
 </script>
