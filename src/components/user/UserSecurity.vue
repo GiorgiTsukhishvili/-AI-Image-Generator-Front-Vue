@@ -75,6 +75,7 @@ const updatePassword = ref(false);
 const handleSubmit = async (values) => {
   try {
     await userPassword(values);
+
     updatePassword.value = false;
   } catch (err) {
     console.log(err);

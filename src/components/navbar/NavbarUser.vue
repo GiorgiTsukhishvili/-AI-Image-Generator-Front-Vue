@@ -50,6 +50,7 @@
 
 <script setup>
 import { ref, watchEffect } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import { logoutUser, getCSRF } from "@/services";
 
@@ -67,10 +68,25 @@ watchEffect(() => {
   }
 });
 
+const { path } = useRoute();
+const { push } = useRouter();
+
+const userRoutes = [
+  "/settings",
+  "/user-collection",
+  "/user-subscriptions",
+  "/user-subscribers",
+  "/user-blogs",
+];
+
 const logout = async () => {
   try {
     await getCSRF();
     await logoutUser();
+
+    if (userRoutes.some((route) => route.includes(path)) && path !== "/") {
+      push("/");
+    }
     props.userInfo.setUserInfo(null);
   } catch (err) {
     console.log(err);
