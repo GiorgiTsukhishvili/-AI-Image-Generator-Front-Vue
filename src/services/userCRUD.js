@@ -9,6 +9,9 @@ export const createUser = (data) => axios.post("/api/user", data);
 export const emailPassword = (data) =>
   axios.post("/api/user/password-email", data);
 
+export const userPassword = (data) =>
+  axios.post("/api/user/password-user", data);
+
 export const logInUser = (info) => axios.post("/api/user-state/login", info);
 
 export const logoutUser = () => axios.get("/api/user-state/logout");

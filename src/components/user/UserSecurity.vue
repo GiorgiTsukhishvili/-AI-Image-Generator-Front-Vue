@@ -43,6 +43,8 @@
 import { Form } from "vee-validate";
 import { ref } from "vue";
 
+import { userPassword } from "@/services";
+
 import { FormInput } from "@/components";
 
 const registerFields = [
@@ -71,6 +73,11 @@ const inputFields = ref(registerFields);
 const updatePassword = ref(false);
 
 const handleSubmit = async (values) => {
-  console.log(values);
+  try {
+    await userPassword(values);
+    updatePassword.value = false;
+  } catch (err) {
+    console.log(err);
+  }
 };
 </script>
