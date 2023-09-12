@@ -1,5 +1,9 @@
 <template>
-  <div v-if="user.user" class="bg-neutral-100 min-h-screen py-40">
+  <div
+    v-if="user.user"
+    class="bg-neutral-100 min-h-screen"
+    :class="navigation === 'information' ? 'py-40' : 'pb-40'"
+  >
     <WrapperComponent>
       <div class="flex gap-10 w-full lg:flex-row flex-col">
         <ul
@@ -20,6 +24,7 @@
         </ul>
         <div class="flex flex-col items-center w-full">
           <UserInfo v-if="navigation === 'information'" />
+          <UserSecurity v-if="navigation === 'security'" />
         </div>
       </div>
     </WrapperComponent>
@@ -36,6 +41,7 @@ import {
   UserInfo,
   SecurityIcon,
   UserInformationIcon,
+  UserSecurity,
 } from "@/components";
 
 const navigation = ref("information");
