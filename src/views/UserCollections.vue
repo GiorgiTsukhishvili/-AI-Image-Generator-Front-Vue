@@ -24,6 +24,9 @@
               <span>
                 <DeleteIcon />
               </span>
+              <span>
+                <EditIcon collection />
+              </span>
             </div>
             <RouterLink
               :to="{
@@ -60,7 +63,7 @@
 </template>
 
 <script setup>
-import { WrapperComponent, DeleteIcon } from "@/components";
+import { WrapperComponent, DeleteIcon, EditIcon } from "@/components";
 
 import { useUserStore } from "@/stores";
 
