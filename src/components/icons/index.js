@@ -10,3 +10,4 @@ export { default as UserInformationIcon } from "./UserInformationIcon.vue";
 export { default as EditIcon } from "./EditIcon.vue";
 export { default as AirplaneIcon } from "./AirplaneIcon.vue";
 export { default as SuccessIcon } from "./SuccessIcon.vue";
+export { default as DeleteIcon } from "./DeleteIcon.vue";

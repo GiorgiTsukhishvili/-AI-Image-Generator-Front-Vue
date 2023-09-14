@@ -19,35 +19,40 @@
           v-if="collections.length !== 0"
           class="flex flex-wrap gap-10 justify-center"
         >
-          <RouterLink
-            v-for="collection in collections"
-            :key="collection.id"
-            :to="{
-              name: 'collection',
-              params: { user: user.user.name },
-              query: { collection: collection.id },
-            }"
-          >
-            <img
-              :src="
-                collection.image
-                  ? collection.image
-                  : '/assets/imgs/folder-icon.png'
-              "
-              alt="collection image"
-              class="w-48 h-48 object-cover"
-            />
-            <h2
-              class="text-center md:text-xl text-lg font-medium max-w-[180px] my-5"
+          <li v-for="collection in collections" :key="collection.id">
+            <div class="flex justify-center gap-5">
+              <span>
+                <DeleteIcon />
+              </span>
+            </div>
+            <RouterLink
+              :to="{
+                name: 'collection',
+                params: { user: user.user.name },
+                query: { collection: collection.id },
+              }"
             >
-              {{ collection.name }}
-            </h2>
-            <h3
-              class="text-center md:text-xl text-lg font-medium max-w-[180px]"
-            >
-              Total blogs: {{ collection.blogs_count }}
-            </h3>
-          </RouterLink>
+              <img
+                :src="
+                  collection.image
+                    ? collection.image
+                    : '/assets/imgs/folder-icon.png'
+                "
+                alt="collection image"
+                class="w-48 h-48 object-cover"
+              />
+              <h2
+                class="text-center md:text-xl text-lg font-medium max-w-[180px] my-5"
+              >
+                {{ collection.name }}
+              </h2>
+              <h3
+                class="text-center md:text-xl text-lg font-medium max-w-[180px]"
+              >
+                Total blogs: {{ collection.blogs_count }}
+              </h3>
+            </RouterLink>
+          </li>
         </ul>
       </div></WrapperComponent
     >
@@ -55,7 +60,7 @@
 </template>
 
 <script setup>
-import { WrapperComponent } from "@/components";
+import { WrapperComponent, DeleteIcon } from "@/components";
 
 import { useUserStore } from "@/stores";
 
