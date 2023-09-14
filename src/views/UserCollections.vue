@@ -21,7 +21,10 @@
         >
           <li v-for="collection in collections" :key="collection.id">
             <div class="flex justify-center gap-5">
-              <span>
+              <span
+                @click="() => deleteChoseCollection(collection.id)"
+                class="cursor-pointer"
+              >
                 <DeleteIcon />
               </span>
               <span>
@@ -70,13 +73,24 @@ import { useUserStore } from "@/stores";
 const user = useUserStore();
 const collections = ref([]);
 
-import { getUserCollections } from "@/services";
+import { getUserCollections, deleteCollection } from "@/services";
 import { ref, watchEffect } from "vue";
 
 const userCollections = async () => {
   const data = await getUserCollections();
 
   collections.value = data.data;
+};
+
+const deleteChoseCollection = async (id) => {
+  try {
+    await deleteCollection(id);
+    collections.value = collections.value.filter(
+      (collection) => collection.id !== id
+    );
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 watchEffect(() => {

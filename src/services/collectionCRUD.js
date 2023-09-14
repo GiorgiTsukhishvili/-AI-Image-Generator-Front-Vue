@@ -5,3 +5,6 @@ export const getDesiredCollection = (user, query) =>
 
 export const getUserCollections = () =>
   axios.get(`/api/collection/user/collections`);
+
+export const deleteCollection = (collectionId) =>
+  axios.delete(`/api/collection/${collectionId}`);
