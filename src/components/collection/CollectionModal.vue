@@ -20,13 +20,14 @@
         class="md:px-10 px-5 py-10 flex flex-col gap-6"
       >
         <ul class="w-full">
-          <FormInput
-            v-for="(inputField, i) in inputFields"
-            :key="i"
-            :name="inputField.name"
-            :type="inputField.type"
-            :rules="inputField.rules"
-            :placeholder="inputField.placeholder"
+          <Field
+            type="text"
+            name="name"
+            rules="required"
+            :validate-on-input="true"
+            class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-3"
+            v-model="name"
+            placeholder="Input Your New Collection Name"
           />
         </ul>
 
@@ -67,19 +68,12 @@ import { Form, Field } from "vee-validate";
 
 import { createCollection } from "@/services";
 
-import { CloseIcon, FormInput, CameraIcon } from "@/components";
+import { CloseIcon, CameraIcon } from "@/components";
 
-const ForgotPasswordFields = [
-  {
-    name: "name",
-    type: "text",
-    placeholder: "Input Your New Collection Name",
-    rules: "required",
-  },
-];
+const props = defineProps({});
 
-const inputFields = ref(ForgotPasswordFields);
 const image = ref();
+const name = ref("");
 
 const handleFileUpload = (data) => {
   if (data !== null) {
@@ -93,8 +87,6 @@ const createUrl = (url) => URL.createObjectURL(url);
 
 const emits = defineEmits(["changeModal", "updateCollections"]);
 
-const props = defineProps({});
-
 const handleSubmit = async (info) => {
   const data = new FormData();
   data.append("image", image);
@@ -104,6 +96,8 @@ const handleSubmit = async (info) => {
     const data = await createCollection(info);
 
     emits("updateCollections", data.data.data);
+    emits("changeModal", false);
+    name.value = "";
   } catch (err) {
     console.log(err);
   }
