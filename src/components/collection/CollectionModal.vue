@@ -34,7 +34,7 @@
         <div class="w-full h-[300px] relative">
           <img
             v-if="image"
-            :src="createUrl(image)"
+            :src="typeof image === 'string' ? image : createUrl(image)"
             alt="collection image"
             class="w-full h-[300px] absolute top-0 left-0 object-cover"
           />
@@ -47,7 +47,7 @@
           <span
             class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1] flex flex-col items-center"
           >
-            <h2 class="text-3xl" v-if="image === undefined">Upload Image</h2>
+            <h2 class="text-3xl" v-if="image === null">Upload Image</h2>
             <CameraIcon />
           </span>
         </div>
@@ -66,14 +66,17 @@
 import { ref } from "vue";
 import { Form, Field } from "vee-validate";
 
-import { createCollection } from "@/services";
+import { createCollection, updateCollection } from "@/services";
 
 import { CloseIcon, CameraIcon } from "@/components";
 
-const props = defineProps({});
+const props = defineProps({
+  collectionValues: { required: true },
+  updatable: { required: true },
+});
 
-const image = ref();
-const name = ref("");
+const image = ref(props.collectionValues.image ?? null);
+const name = ref(props.collectionValues.name);
 
 const handleFileUpload = (data) => {
   if (data !== null) {
@@ -89,15 +92,21 @@ const emits = defineEmits(["changeModal", "updateCollections"]);
 
 const handleSubmit = async (info) => {
   const data = new FormData();
-  data.append("image", image);
+  if (image.value) {
+    data.append("image", image.value);
+  }
   data.append("name", info.name);
 
   try {
-    const data = await createCollection(info);
+    let returnedData;
+    if (props.updatable.open) {
+      returnedData = await updateCollection(props.updatable.id, data);
+    } else {
+      returnedData = await createCollection(data);
+    }
 
-    emits("updateCollections", data.data.data);
+    emits("updateCollections", returnedData.data.data);
     emits("changeModal", false);
-    name.value = "";
   } catch (err) {
     console.log(err);
   }

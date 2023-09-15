@@ -31,7 +31,7 @@
               >
                 <DeleteIcon />
               </span>
-              <span>
+              <span @click="() => editCollection(collection)">
                 <EditIcon collection />
               </span>
             </div>
@@ -69,8 +69,10 @@
   </div>
   <CollectionModal
     v-if="modalOpen"
-    @changeModal="(value) => (modalOpen = value)"
+    @changeModal="closeModal"
     @updateCollections="(collection) => updateCollections(collection)"
+    :collectionValues="collectionValues"
+    :updatable="updatable"
   />
 </template>
 
@@ -84,13 +86,15 @@ import {
 
 import { useUserStore } from "@/stores";
 
+import { getUserCollections, deleteCollection } from "@/services";
+import { ref, watchEffect } from "vue";
+
 const user = useUserStore();
 
 const collections = ref([]);
 const modalOpen = ref(false);
-
-import { getUserCollections, deleteCollection } from "@/services";
-import { ref, watchEffect } from "vue";
+const updatable = ref({ open: false, id: null });
+const collectionValues = ref({ image: null, name: "" });
 
 const userCollections = async () => {
   const data = await getUserCollections();
@@ -98,9 +102,19 @@ const userCollections = async () => {
   collections.value = data.data;
 };
 
+const editCollection = (collection) => {
+  modalOpen.value = true;
+  updatable.value = { open: true, id: collection.id };
+  collectionValues.value = { image: collection.image, name: collection.name };
+};
+
 const updateCollections = (data) => {
   if (collections.value.every((el) => el.id !== data.id)) {
-    collections.value.unshift(data);
+    collections.value.unshift({ ...data, blogs_count: 0 });
+  } else {
+    collections.value = collections.value.map((el) =>
+      el.id === data.id ? { ...el, ...data } : el
+    );
   }
 };
 
@@ -113,6 +127,12 @@ const deleteChoseCollection = async (id) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+const closeModal = () => {
+  modalOpen.value = false;
+  updatable.value = { open: false, id: null };
+  collectionValues.value = { image: null, name: "" };
 };
 
 watchEffect(() => {
