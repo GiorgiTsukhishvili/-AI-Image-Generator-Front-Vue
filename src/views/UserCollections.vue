@@ -24,7 +24,7 @@
           class="flex flex-wrap gap-10 justify-start"
         >
           <li v-for="collection in collections" :key="collection.id">
-            <div class="flex justify-center gap-5">
+            <div class="flex justify-center gap-5 mb-5">
               <span
                 @click="() => deleteChoseCollection(collection.id)"
                 class="cursor-pointer"
@@ -70,6 +70,7 @@
   <CollectionModal
     v-if="modalOpen"
     @changeModal="(value) => (modalOpen = value)"
+    @updateCollections="(collection) => updateCollections(collection)"
   />
 </template>
 
@@ -95,6 +96,12 @@ const userCollections = async () => {
   const data = await getUserCollections();
 
   collections.value = data.data;
+};
+
+const updateCollections = (data) => {
+  if (collections.value.every((el) => el.id !== data.id)) {
+    collections.value.unshift(data);
+  }
 };
 
 const deleteChoseCollection = async (id) => {

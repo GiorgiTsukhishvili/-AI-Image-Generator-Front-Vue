@@ -65,6 +65,8 @@
 import { ref } from "vue";
 import { Form, Field } from "vee-validate";
 
+import { createCollection } from "@/services";
+
 import { CloseIcon, FormInput, CameraIcon } from "@/components";
 
 const ForgotPasswordFields = [
@@ -89,7 +91,7 @@ const handleFileUpload = (data) => {
 
 const createUrl = (url) => URL.createObjectURL(url);
 
-const emits = defineEmits(["changeModal"]);
+const emits = defineEmits(["changeModal", "updateCollections"]);
 
 const props = defineProps({});
 
@@ -97,5 +99,13 @@ const handleSubmit = async (info) => {
   const data = new FormData();
   data.append("image", image);
   data.append("name", info.name);
+
+  try {
+    const data = await createCollection(info);
+
+    emits("updateCollections", data.data.data);
+  } catch (err) {
+    console.log(err);
+  }
 };
 </script>
