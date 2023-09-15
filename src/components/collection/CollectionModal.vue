@@ -15,14 +15,87 @@
       >
         <CloseIcon />
       </div>
+      <Form
+        @submit="handleSubmit"
+        class="md:px-10 px-5 py-10 flex flex-col gap-6"
+      >
+        <ul class="w-full">
+          <FormInput
+            v-for="(inputField, i) in inputFields"
+            :key="i"
+            :name="inputField.name"
+            :type="inputField.type"
+            :rules="inputField.rules"
+            :placeholder="inputField.placeholder"
+          />
+        </ul>
+
+        <div class="w-full h-[300px] relative">
+          <img
+            v-if="image"
+            :src="createUrl(image)"
+            alt="collection image"
+            class="w-full h-[300px] absolute top-0 left-0 object-cover"
+          />
+          <Field
+            type="file"
+            name="image"
+            class="opacity-0 z-[2] absolute top-0 left-0 w-full h-[300px] rounded-full"
+            @input="(e) => handleFileUpload(e.target.files, 'image')"
+          />
+          <span
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[1] flex flex-col items-center"
+          >
+            <h2 class="text-3xl" v-if="image === undefined">Upload Image</h2>
+            <CameraIcon />
+          </span>
+        </div>
+        <button
+          type="submit"
+          class="bg-green-500 text-white py-2 px-4 md:inline block w-full md:max-w-[160px] rounded-md uppercase hover:bg-green-600 duration-300 text-lg"
+        >
+          Submit
+        </button>
+      </Form>
     </div>
   </div>
 </template>
 
 <script setup>
-import { CloseIcon } from "@/components";
+import { ref } from "vue";
+import { Form, Field } from "vee-validate";
+
+import { CloseIcon, FormInput, CameraIcon } from "@/components";
+
+const ForgotPasswordFields = [
+  {
+    name: "name",
+    type: "text",
+    placeholder: "Input Your New Collection Name",
+    rules: "required",
+  },
+];
+
+const inputFields = ref(ForgotPasswordFields);
+const image = ref();
+
+const handleFileUpload = (data) => {
+  if (data !== null) {
+    if (data[0]) {
+      image.value = data[0];
+    }
+  }
+};
+
+const createUrl = (url) => URL.createObjectURL(url);
 
 const emits = defineEmits(["changeModal"]);
 
 const props = defineProps({});
+
+const handleSubmit = async (info) => {
+  const data = new FormData();
+  data.append("image", image);
+  data.append("name", info.name);
+};
 </script>
