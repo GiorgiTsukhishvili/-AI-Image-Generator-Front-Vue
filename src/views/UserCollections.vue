@@ -1,23 +1,27 @@
 <template>
   <div class="bg-neutral-100 min-h-screen pb-40 pt-60">
     <WrapperComponent
-      ><div class="flex flex-col">
-        <div>
-          <h2
-            class="mt-16 pb-10 mb-10 border-b-2 border-gray-500 w-full md:text-3xl text-2xl"
+      ><div class="flex flex-col w-full">
+        <div
+          class="mb-10 mt-16 pb-10 border-b-2 border-gray-500 w-full flex justify-between items-center md:flex-row flex-col-reverse"
+        >
+          <h2 class="md:text-3xl text-2xl">Collections:</h2>
+          <button
+            class="md:text-2xl text-xl bg-green-500 text-white py-2 px-4 rounded-md"
+            @click="() => (modalOpen = true)"
           >
-            Collections:
-          </h2>
-          <h1
-            v-if="collections.length === 0"
-            class="md:text-3xl text-2xl font-semibold"
-          >
-            User Has No Collections So Far
-          </h1>
+            Create Collection
+          </button>
         </div>
+        <h1
+          v-if="collections.length === 0"
+          class="md:text-3xl text-2xl font-semibold"
+        >
+          User Has No Collections So Far
+        </h1>
         <ul
           v-if="collections.length !== 0"
-          class="flex flex-wrap gap-10 justify-center"
+          class="flex flex-wrap gap-10 justify-start"
         >
           <li v-for="collection in collections" :key="collection.id">
             <div class="flex justify-center gap-5">
@@ -63,15 +67,26 @@
       </div></WrapperComponent
     >
   </div>
+  <CollectionModal
+    v-if="modalOpen"
+    @changeModal="(value) => (modalOpen = value)"
+  />
 </template>
 
 <script setup>
-import { WrapperComponent, DeleteIcon, EditIcon } from "@/components";
+import {
+  WrapperComponent,
+  DeleteIcon,
+  EditIcon,
+  CollectionModal,
+} from "@/components";
 
 import { useUserStore } from "@/stores";
 
 const user = useUserStore();
+
 const collections = ref([]);
+const modalOpen = ref(false);
 
 import { getUserCollections, deleteCollection } from "@/services";
 import { ref, watchEffect } from "vue";
