@@ -19,17 +19,20 @@
         @submit="handleSubmit"
         class="md:px-10 px-5 py-10 flex flex-col gap-6"
       >
-        <ul class="w-full">
+        <div class="relative w-full">
+          <label for="name" class="text-2xl">Name:</label>
           <Field
             type="text"
             name="name"
+            id="name"
             rules="required"
             :validate-on-input="true"
             class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-3"
             v-model="name"
             placeholder="Input Your New Collection Name"
           />
-        </ul>
+          <ErrorMessage name="name" class="text-red-600 absolute -bottom-4" />
+        </div>
 
         <div class="w-full h-[300px] relative">
           <img
@@ -64,7 +67,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { Form, Field } from "vee-validate";
+import { Form, Field, ErrorMessage } from "vee-validate";
 
 import { createCollection, updateCollection } from "@/services";
 
