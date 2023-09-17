@@ -10,7 +10,7 @@
             class="flex-1 min-w-[300px] max-w-[600px]"
           >
             <div class="flex justify-end gap-5 mb-6">
-              <span>
+              <span @click="() => (modalOpen = true)">
                 <EditIcon collection />
               </span>
               <span
@@ -30,6 +30,7 @@
       </div>
     </WrapperComponent>
   </div>
+  <BlogModal v-if="modalOpen" @changeModal="(value) => (modalOpen = value)" />
 </template>
 
 <script setup>
@@ -40,6 +41,7 @@ import {
   CollectionBlog,
   DeleteIcon,
   EditIcon,
+  BlogModal,
 } from "@/components";
 
 import { getUserBlogs, deleteBlog } from "@/services";
@@ -47,6 +49,7 @@ import { getUserBlogs, deleteBlog } from "@/services";
 import { useUserStore } from "@/stores";
 
 const blogs = ref([]);
+const modalOpen = ref(false);
 
 const user = useUserStore();
 
