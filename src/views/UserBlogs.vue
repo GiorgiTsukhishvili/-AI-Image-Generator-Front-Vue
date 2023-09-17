@@ -30,7 +30,11 @@
       </div>
     </WrapperComponent>
   </div>
-  <BlogModal v-if="modalOpen" @changeModal="(value) => (modalOpen = value)" />
+  <BlogModal
+    v-if="modalOpen"
+    @changeModal="(value) => (modalOpen = value)"
+    :tagsAndCollections="tagsAndCollections"
+  />
 </template>
 
 <script setup>
@@ -50,6 +54,7 @@ import { useUserStore } from "@/stores";
 
 const blogs = ref([]);
 const modalOpen = ref(false);
+const tagsAndCollections = ref({ tags: [], collections: [] });
 
 const user = useUserStore();
 
@@ -69,9 +74,13 @@ const deleteChoseBlog = async (id) => {
 };
 
 onMounted(async () => {
-  const data = await getTags();
+  try {
+    const data = await getTags();
 
-  console.log(data.data);
+    tagsAndCollections.value = data.data;
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 watchEffect(() => {
