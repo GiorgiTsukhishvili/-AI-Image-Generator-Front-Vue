@@ -34,7 +34,7 @@
 </template>
 
 <script setup>
-import { watchEffect, ref } from "vue";
+import { watchEffect, ref, onMounted } from "vue";
 
 import {
   WrapperComponent,
@@ -44,7 +44,7 @@ import {
   BlogModal,
 } from "@/components";
 
-import { getUserBlogs, deleteBlog } from "@/services";
+import { getUserBlogs, deleteBlog, getTags } from "@/services";
 
 import { useUserStore } from "@/stores";
 
@@ -67,6 +67,12 @@ const deleteChoseBlog = async (id) => {
     console.log(err);
   }
 };
+
+onMounted(async () => {
+  const data = await getTags();
+
+  console.log(data.data);
+});
 
 watchEffect(() => {
   if (user.user) {
