@@ -7,7 +7,7 @@
       @click="emits('changeModal', false)"
     />
     <div
-      class="bg-white scrollbar-hide rounded-lg shadow-2xl md:max-w-[700px] md:w-full pb-10 h-screen w-screen md:min-h-fit overflow-scroll relative md:h-auto z-10"
+      class="bg-white scrollbar-hide rounded-lg shadow-2xl md:max-w-[700px] md:w-full pb-10 h-screen w-screen md:max-h-[900px] overflow-scroll relative md:h-auto z-10"
     >
       <div
         class="absolute top-10 right-10 md:hidden"
@@ -88,9 +88,27 @@
             </Field>
             <ErrorMessage name="tag" class="text-red-600 absolute -bottom-7" />
           </div>
+          <div class="relative mb-7">
+            <label for="description" class="text-2xl">Add Description:</label>
+            <Field
+              as="textArea"
+              name="description"
+              id="description"
+              cols="30"
+              rows="5"
+              :validate-on-input="true"
+              rules="required"
+              class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-4 text-lg w-full block text-black mb-3"
+              placeholder="Add your description of image"
+            />
+            <ErrorMessage
+              name="description"
+              class="text-red-600 absolute -bottom-7"
+            />
+          </div>
         </div>
 
-        <div class="w-full h-[300px] relative">
+        <div class="w-full h-[300px] relative mb-5">
           <img
             v-if="image"
             :src="typeof image === 'string' ? image : createUrl(image)"
@@ -98,8 +116,10 @@
             class="w-full h-[300px] absolute top-0 left-0 object-cover"
           />
           <Field
+            rules="requiredSelect"
             type="file"
             name="image"
+            id="image"
             class="opacity-0 z-[2] absolute top-0 left-0 w-full h-[300px] rounded-full"
             @input="(e) => handleFileUpload(e.target.files, 'image')"
           />
@@ -109,6 +129,7 @@
             <h2 class="text-3xl" v-if="image === null">Upload Image</h2>
             <CameraIcon />
           </span>
+          <ErrorMessage name="image" class="text-red-600 absolute -bottom-7" />
         </div>
         <button
           type="submit"
