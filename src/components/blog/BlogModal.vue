@@ -68,6 +68,26 @@
               class="text-red-600 absolute -bottom-7"
             />
           </div>
+          <div class="relative mb-7">
+            <label for="tag" class="text-2xl">Tags:</label>
+
+            <Field
+              name="tag"
+              as="select"
+              class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-4 text-lg w-full block text-black mb-3"
+              rules="requiredSelect"
+              multiple
+            >
+              <option
+                v-for="tag in props.tagsAndCollections.tags"
+                :key="tag.id"
+                :value="tag.id"
+              >
+                {{ tag.name }}
+              </option>
+            </Field>
+            <ErrorMessage name="tag" class="text-red-600 absolute -bottom-7" />
+          </div>
         </div>
 
         <div class="w-full h-[300px] relative">
