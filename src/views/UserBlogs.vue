@@ -2,7 +2,17 @@
   <div class="bg-neutral-100 min-h-screen pb-40 pt-60">
     <WrapperComponent>
       <div>
-        <h1 class="md:text-4xl text-2xl font-semibold">My Blogs:</h1>
+        <div
+          class="mb-10 mt-16 pb-10 border-b-2 border-gray-500 w-full flex justify-between items-center md:flex-row flex-col-reverse"
+        >
+          <h1 class="md:text-4xl text-2xl font-semibold">My Blogs:</h1>
+          <button
+            class="md:text-2xl text-xl bg-green-500 text-white py-2 px-4 rounded-md"
+            @click="() => (modalOpen = true)"
+          >
+            Create Blog
+          </button>
+        </div>
         <ul class="mt-16 flex flex-wrap gap-20">
           <li
             v-for="blog in blogs"
