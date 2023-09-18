@@ -46,9 +46,16 @@
               class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-4 text-lg w-full block text-black mb-3"
               rules="requiredSelect"
             >
-              <option value="" disabled>Select a collection</option>
-
+              <option value="" disabled selected>Select a collection</option>
               <option
+                value=""
+                disabled
+                v-if="props.tagsAndCollections.collections.length === 0"
+              >
+                You have no collections, Please create one.
+              </option>
+              <option
+                v-else
                 v-for="collection in props.tagsAndCollections.collections"
                 :key="collection.id"
                 :value="collection.id"
