@@ -20,18 +20,47 @@
         class="md:px-10 px-5 py-10 flex flex-col gap-6"
       >
         <div class="relative w-full">
-          <label for="title" class="text-2xl">Title:</label>
-          <Field
-            type="text"
-            name="title"
-            id="title"
-            rules="required"
-            :validate-on-input="true"
-            class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-3"
-            v-model="title"
-            placeholder="Input Your New Collection Title"
-          />
-          <ErrorMessage name="title" class="text-red-600 absolute -bottom-4" />
+          <div class="relative mb-7">
+            <label for="title" class="text-2xl">Title:</label>
+            <Field
+              type="text"
+              name="title"
+              id="title"
+              rules="required"
+              :validate-on-input="true"
+              class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-3"
+              v-model="title"
+              placeholder="Input Your New Collection Title"
+            />
+            <ErrorMessage
+              name="title"
+              class="text-red-600 absolute -bottom-7"
+            />
+          </div>
+          <div class="relative mb-7">
+            <label for="collection" class="text-2xl">Collection:</label>
+
+            <Field
+              name="collection"
+              as="select"
+              class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-4 text-lg w-full block text-black mb-3"
+              rules="requiredSelect"
+            >
+              <option value="" disabled>Select a collection</option>
+
+              <option
+                v-for="collection in props.tagsAndCollections.collections"
+                :key="collection.id"
+                :value="collection.id"
+              >
+                {{ collection.name }}
+              </option>
+            </Field>
+            <ErrorMessage
+              name="collection"
+              class="text-red-600 absolute -bottom-7"
+            />
+          </div>
         </div>
 
         <div class="w-full h-[300px] relative">

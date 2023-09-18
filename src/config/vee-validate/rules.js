@@ -4,6 +4,10 @@ defineRule("required", (value) =>
   value && value.trim() ? true : "This field is required"
 );
 
+defineRule("requiredSelect", (value) =>
+  value ? true : "This field is required"
+);
+
 defineRule("email", (value) => {
   if (!value || !value.length) {
     return true;
