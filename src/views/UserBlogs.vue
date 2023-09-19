@@ -43,7 +43,7 @@
   <BlogModal
     v-if="modalOpen"
     @changeModal="closeModal"
-    @updateBlogs="(value) => updateBlogs(value)"
+    @updateBlogs="(value, tags) => updateBlogs(value, tags)"
     :tagsAndCollections="tagsAndCollections"
     :updatable="updatable"
   />
@@ -91,12 +91,12 @@ const deleteChoseBlog = async (id) => {
   }
 };
 
-const updateBlogs = (data) => {
+const updateBlogs = (data, tags) => {
   if (blogs.value.every((el) => el.id !== data.id)) {
-    blogs.value.unshift(data);
+    blogs.value.unshift({ ...data, tags });
   } else {
     blogs.value = blogs.value.map((el) =>
-      el.id === data.id ? { ...el, ...data } : el
+      el.id === data.id ? { ...el, ...data, tags } : el
     );
   }
 };

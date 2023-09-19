@@ -191,7 +191,7 @@ const handleSubmit = async () => {
       returnedData = await createBlog(data);
     }
 
-    emits("updateBlogs", returnedData.data.data);
+    emits("updateBlogs", returnedData.data.data, tags.value);
     emits("changeModal", false);
   } catch (err) {
     console.log(err);
