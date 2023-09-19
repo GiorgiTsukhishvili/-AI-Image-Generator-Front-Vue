@@ -39,12 +39,12 @@
           </div>
           <div class="relative mb-7">
             <label for="collection" class="text-2xl">Collection:</label>
-
             <Field
               name="collection"
               as="select"
               class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-4 text-lg w-full block text-black mb-3"
               rules="requiredSelect"
+              v-model="chosenCollection"
             >
               <option value="" disabled selected>Select a collection</option>
               <option
@@ -59,6 +59,7 @@
                 v-for="collection in props.tagsAndCollections.collections"
                 :key="collection.id"
                 :value="collection.id"
+                :selected="collection.id === chosenCollection"
               >
                 {{ collection.name }}
               </option>
@@ -70,18 +71,19 @@
           </div>
           <div class="relative mb-7">
             <label for="tag" class="text-2xl">Tags:</label>
-
             <Field
               name="tag"
               as="select"
               class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-4 text-lg w-full block text-black mb-3"
               rules="requiredSelect"
               multiple
+              v-model="tags"
             >
               <option
                 v-for="tag in props.tagsAndCollections.tags"
                 :key="tag.id"
                 :value="tag.id"
+                :selected="tags.includes(tag.id)"
               >
                 {{ tag.name }}
               </option>
@@ -100,6 +102,7 @@
               rules="required"
               class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-4 text-lg w-full block text-black mb-3"
               placeholder="Add your description of image"
+              v-model="description"
             />
             <ErrorMessage
               name="description"
@@ -153,6 +156,9 @@ const props = defineProps({ tagsAndCollections: { required: true } });
 
 const image = ref(null);
 const title = ref("");
+const chosenCollection = ref(null);
+const tags = ref([]);
+const description = ref("");
 
 const handleFileUpload = (data) => {
   if (data !== null) {
