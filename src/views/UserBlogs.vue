@@ -42,8 +42,10 @@
   </div>
   <BlogModal
     v-if="modalOpen"
-    @changeModal="(value) => (modalOpen = value)"
+    @changeModal="closeModal"
+    @updateBlogs="(value) => updateBlogs(value)"
     :tagsAndCollections="tagsAndCollections"
+    :updatable="updatable"
   />
 </template>
 
@@ -65,8 +67,14 @@ import { useUserStore } from "@/stores";
 const blogs = ref([]);
 const modalOpen = ref(false);
 const tagsAndCollections = ref({ tags: [], collections: [] });
+const updatable = ref({ open: false, id: null });
 
 const user = useUserStore();
+
+const closeModal = () => {
+  modalOpen.value = false;
+  updatable.value = { open: false, id: null };
+};
 
 const getBlogs = async () => {
   const data = await getUserBlogs();
@@ -80,6 +88,16 @@ const deleteChoseBlog = async (id) => {
     blogs.value = blogs.value.filter((blog) => blog.id !== id);
   } catch (err) {
     console.log(err);
+  }
+};
+
+const updateBlogs = (data) => {
+  if (blogs.value.every((el) => el.id !== data.id)) {
+    blogs.value.unshift(data);
+  } else {
+    blogs.value = blogs.value.map((el) =>
+      el.id === data.id ? { ...el, ...data } : el
+    );
   }
 };
 

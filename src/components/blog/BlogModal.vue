@@ -153,8 +153,11 @@ import { createBlog } from "@/services";
 
 import { CloseIcon, CameraIcon } from "@/components";
 
-const emits = defineEmits(["changeModal"]);
-const props = defineProps({ tagsAndCollections: { required: true } });
+const emits = defineEmits(["changeModal", "updateBlogs"]);
+const props = defineProps({
+  tagsAndCollections: { required: true },
+  updatable: { required: true },
+});
 
 const image = ref(null);
 const title = ref("");
@@ -179,6 +182,20 @@ const handleSubmit = async () => {
   data.append("description", description.value);
   data.append("blog_collection_id", chosenCollection.value);
   data.append("tags", JSON.stringify(tags.value));
+
+  try {
+    let returnedData;
+    if (props.updatable.open) {
+      //
+    } else {
+      returnedData = await createBlog(data);
+    }
+
+    emits("updateBlogs", returnedData.data.data);
+    emits("changeModal", false);
+  } catch (err) {
+    console.log(err);
+  }
 
   await createBlog(data);
 };
