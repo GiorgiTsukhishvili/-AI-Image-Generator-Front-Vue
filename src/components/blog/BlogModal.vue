@@ -149,6 +149,8 @@
 import { ref } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 
+import { createBlog } from "@/services";
+
 import { CloseIcon, CameraIcon } from "@/components";
 
 const emits = defineEmits(["changeModal"]);
@@ -170,7 +172,14 @@ const handleFileUpload = (data) => {
 
 const createUrl = (url) => URL.createObjectURL(url);
 
-const handleSubmit = async (info) => {
-  console.log(info);
+const handleSubmit = async () => {
+  const data = new FormData();
+  data.append("image", image.value);
+  data.append("title", title.value);
+  data.append("description", description.value);
+  data.append("blog_collection_id", chosenCollection.value);
+  data.append("tags", JSON.stringify(tags.value));
+
+  await createBlog(data);
 };
 </script>
