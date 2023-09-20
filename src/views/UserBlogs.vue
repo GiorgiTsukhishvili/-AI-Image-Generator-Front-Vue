@@ -20,7 +20,7 @@
             class="flex-1 min-w-[300px] max-w-[600px]"
           >
             <div class="flex justify-end gap-5 mb-6">
-              <span @click="() => (modalOpen = true)">
+              <span @click="() => editBlog(blog)">
                 <EditIcon collection />
               </span>
               <span
@@ -46,6 +46,7 @@
     @updateBlogs="(value, tags) => updateBlogs(value, tags)"
     :tagsAndCollections="tagsAndCollections"
     :updatable="updatable"
+    :blogValues="blogValues"
   />
 </template>
 
@@ -68,12 +69,38 @@ const blogs = ref([]);
 const modalOpen = ref(false);
 const tagsAndCollections = ref({ tags: [], collections: [] });
 const updatable = ref({ open: false, id: null });
+const blogValues = ref({
+  image: null,
+  title: "",
+  description: "",
+  tags: [],
+  chosenCollection: null,
+});
 
 const user = useUserStore();
 
 const closeModal = () => {
   modalOpen.value = false;
   updatable.value = { open: false, id: null };
+  blogValues.value = {
+    image: null,
+    title: "",
+    description: "",
+    tags: [],
+    chosenCollection: null,
+  };
+};
+
+const editBlog = (blog) => {
+  modalOpen.value = true;
+  updatable.value = { open: true, id: blog.id };
+  blogValues.value = {
+    image: blog.image,
+    title: blog.title,
+    description: blog.description,
+    tags: blog.tags,
+    chosenCollection: blog.blog_collection_id,
+  };
 };
 
 const getBlogs = async () => {

@@ -119,7 +119,7 @@
             class="w-full h-[300px] absolute top-0 left-0 object-cover"
           />
           <Field
-            rules="requiredSelect"
+            :rules="{ requiredSelect: !updatable.open }"
             type="file"
             name="image"
             id="image"
@@ -149,7 +149,7 @@
 import { ref } from "vue";
 import { Form, Field, ErrorMessage } from "vee-validate";
 
-import { createBlog } from "@/services";
+import { createBlog, updateBlog } from "@/services";
 
 import { CloseIcon, CameraIcon } from "@/components";
 
@@ -157,13 +157,14 @@ const emits = defineEmits(["changeModal", "updateBlogs"]);
 const props = defineProps({
   tagsAndCollections: { required: true },
   updatable: { required: true },
+  blogValues: { required: true },
 });
 
-const image = ref(null);
-const title = ref("");
-const chosenCollection = ref(null);
-const tags = ref([]);
-const description = ref("");
+const image = ref(props.blogValues.image);
+const title = ref(props.blogValues.title);
+const chosenCollection = ref(props.blogValues.chosenCollection);
+const tags = ref(props.blogValues.tags);
+const description = ref(props.blogValues.description);
 
 const handleFileUpload = (data) => {
   if (data !== null) {
@@ -186,7 +187,7 @@ const handleSubmit = async () => {
   try {
     let returnedData;
     if (props.updatable.open) {
-      //
+      returnedData = await updateBlog(props.updatable.id, data);
     } else {
       returnedData = await createBlog(data);
     }
@@ -196,7 +197,5 @@ const handleSubmit = async () => {
   } catch (err) {
     console.log(err);
   }
-
-  await createBlog(data);
 };
 </script>

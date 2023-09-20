@@ -14,6 +14,13 @@ export const createBlog = (data) =>
     },
   });
 
+export const updateBlog = (id, data) =>
+  axios.post(`/api/blog/${id}?_method=put`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
 export const deleteBlog = (id) => axios.delete(`/api/blog/${id}`);
 
 export const getTags = () => axios.get("api/tags");
