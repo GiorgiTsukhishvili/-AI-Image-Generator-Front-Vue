@@ -98,7 +98,7 @@ const editBlog = (blog) => {
     image: blog.image,
     title: blog.title,
     description: blog.description,
-    tags: blog.tags,
+    tags: blog.tags.map((tag) => tag.id),
     chosenCollection: blog.blog_collection_id,
   };
 };
