@@ -26,6 +26,11 @@
                   Subscribers: {{ blogInfo.user.subscribers.length }}
                 </h4>
               </div>
+              <div class="flex items-center mt-6 gap-4">
+                <ViewIcon />
+                <h2 class="text-3xl pt-2">Views</h2>
+                <h2 class="text-3xl pt-2">{{ blogInfo.views }}</h2>
+              </div>
             </div>
             <SubscribeCommon
               v-if="user.user !== null && user.user.id !== blogInfo.user.id"
@@ -128,6 +133,7 @@ import {
   BlogLike,
   BlogCreateComment,
   SubscribeCommon,
+  ViewIcon,
 } from "@/components";
 
 import { getSingleBlog, getCSRF } from "@/services";
