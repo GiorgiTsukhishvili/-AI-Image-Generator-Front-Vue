@@ -79,7 +79,7 @@ onMounted(async () => {
   const { query } = route;
   if (query.type) {
     if (query.type === "email") {
-      const link = `${query["email-link"]}&token=${query.token}&signature=${query.signature}`;
+      const link = `${query["email-link"]}&token=${query.token}&signature=${query.signature}&email=${query.email}`;
 
       try {
         const data = await axios.get(link);
