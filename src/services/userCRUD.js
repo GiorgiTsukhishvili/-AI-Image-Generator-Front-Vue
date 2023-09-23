@@ -9,6 +9,8 @@ export const createUser = (data) => axios.post("/api/user", data);
 export const emailPassword = (data) =>
   axios.post("/api/user/password-email", data);
 
+export const updateEmail = (data) => axios.post("/api/user/update-email", data);
+
 export const userPassword = (data) =>
   axios.post("/api/user/password-user", data);
 

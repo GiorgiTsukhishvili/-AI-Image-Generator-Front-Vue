@@ -32,9 +32,11 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 
 import { useUserStore } from "@/stores";
+
+import { useRoute, useRouter } from "vue-router";
 
 import {
   WrapperComponent,
@@ -47,4 +49,17 @@ import {
 const navigation = ref("information");
 
 const user = useUserStore();
+
+const router = useRouter();
+const route = useRoute();
+
+onMounted(async () => {
+  await router.isReady();
+  const { query } = route;
+  if (query.type) {
+    if (query.type === "email") {
+      navigation.value = "security";
+    }
+  }
+});
 </script>

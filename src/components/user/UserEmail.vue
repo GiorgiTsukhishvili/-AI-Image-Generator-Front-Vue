@@ -5,7 +5,7 @@
   <Form
     @submit="handleSubmit"
     class="md:px-10 px-5 py-10 flex flex-col gap-6 max-w-[600px] w-full"
-    v-if="updateEmail"
+    v-if="inputOpen"
     ><ul class="w-full">
       <FormInput
         name="email"
@@ -32,31 +32,67 @@
         :placeholder="user.user.email"
         placeholderColor
     /></span>
-    <button @click="() => (updateEmail = true)" class="text-lg">
+    <button @click="() => (inputOpen = true)" class="text-lg">
       Update Email
     </button>
   </ul>
   <EmailSentModal
     v-if="modalOpen"
     @changeModal="() => (modalOpen = false)"
-    text="Email Update mail was sent."
+    :text="text"
   />
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { Form } from "vee-validate";
 
+import { useRoute, useRouter } from "vue-router";
+
 import { useUserStore } from "@/stores";
+import { updateEmail, axios } from "@/services";
 
 import { FormInput, EmailSentModal } from "@/components";
 
+const router = useRouter();
+const route = useRoute();
+
 const user = useUserStore();
 
-const updateEmail = ref(false);
+const inputOpen = ref(false);
 const modalOpen = ref(false);
+const text = ref("Email Update mail was sent.");
 
 const handleSubmit = async (values) => {
-  modalOpen.value = true;
+  try {
+    await updateEmail(values);
+
+    text.value = "Email Update mail was sent.";
+    modalOpen.value = true;
+  } catch (err) {
+    console.log(err);
+  }
 };
+
+onMounted(async () => {
+  await router.isReady();
+  const { query } = route;
+  if (query.type) {
+    if (query.type === "email") {
+      const link = `${query["email-link"]}&token=${query.token}&signature=${query.signature}`;
+
+      try {
+        const data = await axios.get(link);
+
+        user.setUserInfo({ ...user.user, email: data.data.email });
+
+        modalOpen.value = true;
+
+        text.value = "Email verified successfully";
+      } catch (_) {
+        router.push("/settings");
+      }
+    }
+  }
+});
 </script>
