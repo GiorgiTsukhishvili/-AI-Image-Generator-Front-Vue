@@ -1,6 +1,7 @@
 <template>
   <div class="w-full flex flex-col justify-center items-start">
-    <h1 class="md:px-10 px-5 pt-16 md:text-4xl text-2xl font-bold">
+    <UserEmail />
+    <h1 class="md:px-10 px-5 pt-8 md:text-4xl text-2xl font-bold">
       Update Password
     </h1>
     <Form
@@ -45,7 +46,7 @@ import { ref } from "vue";
 
 import { userPassword } from "@/services";
 
-import { FormInput } from "@/components";
+import { FormInput, UserEmail } from "@/components";
 
 const registerFields = [
   {

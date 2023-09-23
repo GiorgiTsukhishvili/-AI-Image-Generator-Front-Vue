@@ -9,6 +9,7 @@
       :validate-on-input="true"
       class="border border-black focus:border-blue-600 hover:border-blue-600 duration-300 rounded-md bg-transparent focus:border focus:outline-none px-4 py-3 text-lg w-full block text-black mb-7"
       :placeholder="placeholder"
+      :class="{ 'placeholder:text-black': placeholderColor }"
     />
     <ErrorMessage :name="name" class="text-red-600 absolute -bottom-8" />
   </li>
@@ -23,6 +24,7 @@ const props = defineProps({
   type: String,
   rules: String,
   placeholder: String,
+  placeholderColor: Boolean,
 });
 
 const labelText = computed(() =>
