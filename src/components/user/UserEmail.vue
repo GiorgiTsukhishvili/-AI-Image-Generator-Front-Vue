@@ -36,6 +36,11 @@
       Update Email
     </button>
   </ul>
+  <EmailSentModal
+    v-if="modalOpen"
+    @changeModal="() => (modalOpen = false)"
+    text="Email Update mail was sent."
+  />
 </template>
 
 <script setup>
@@ -44,11 +49,14 @@ import { Form } from "vee-validate";
 
 import { useUserStore } from "@/stores";
 
-import { FormInput } from "@/components";
+import { FormInput, EmailSentModal } from "@/components";
 
 const user = useUserStore();
 
 const updateEmail = ref(false);
+const modalOpen = ref(false);
 
-const handleSubmit = async (values) => {};
+const handleSubmit = async (values) => {
+  modalOpen.value = true;
+};
 </script>
