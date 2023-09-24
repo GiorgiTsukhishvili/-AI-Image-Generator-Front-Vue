@@ -113,7 +113,7 @@ const handleSubmit = async (values) => {
     setUserInfo(data.data.user);
     emits("changeModal", "");
   } catch (err) {
-    errorMessage.value = "Username or Password is incorrect.";
+    errorMessage.value = err.response.data.message;
   }
 };
 </script>
