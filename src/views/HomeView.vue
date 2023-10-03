@@ -8,7 +8,10 @@
           <li
             v-for="(blog, i) in blogs"
             :key="blog.id"
-            :class="{ 'flex-1 min-w-[300px] max-w-[600px]': i !== 0 }"
+            :class="{
+              'flex-1 min-w-[300px] max-w-[600px]': i !== 0,
+              'w-full': i === 0,
+            }"
           >
             <BlogLarge v-if="i === 0" :blog="blog" />
             <BlogSmall v-else :blog="blog" />
