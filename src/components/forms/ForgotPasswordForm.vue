@@ -45,6 +45,12 @@
             :rules="inputField.rules"
             :placeholder="inputField.placeholder"
           />
+          <h2
+            v-if="errorMessage !== ''"
+            class="text-red-600 font-normal text-base"
+          >
+            {{ errorMessage }}
+          </h2>
         </ul>
         <button
           type="submit"
@@ -76,6 +82,7 @@ const ForgotPasswordFields = [
 ];
 
 const inputFields = ref(ForgotPasswordFields);
+const errorMessage = ref("");
 
 const handleSubmit = async (values) => {
   try {
@@ -87,7 +94,7 @@ const handleSubmit = async (values) => {
       "Password update link sent, please check your email"
     );
   } catch (err) {
-    console.log(err);
+    errorMessage.value = err.response?.data?.message;
   }
 };
 </script>
