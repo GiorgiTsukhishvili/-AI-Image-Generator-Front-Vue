@@ -43,6 +43,11 @@
             :placeholder="inputField.placeholder"
           />
         </ul>
+        <ul v-if="errors.length !== 0" class="text-red-600 font-normal text-lg">
+          <li v-for="error in errors" :key="error">
+            {{ error }}
+          </li>
+        </ul>
         <button
           type="submit"
           class="bg-green-500 text-white py-2 px-4 md:inline block w-full md:max-w-[160px] rounded-md uppercase hover:bg-green-600 duration-300 text-lg"
@@ -90,6 +95,7 @@ const registerFields = [
 ];
 
 const inputFields = ref(registerFields);
+const errors = ref([]);
 
 const handleSubmit = async (values) => {
   try {
@@ -100,7 +106,7 @@ const handleSubmit = async (values) => {
       "Registration link sent, please check your email"
     );
   } catch (err) {
-    console.log(err);
+    errors.value = Object.values(err.response?.data?.errors).flat();
   }
 };
 </script>
