@@ -1,5 +1,9 @@
 <template>
-  <div class="h-20 shadow-2xl w-full bg-neutral-100 relative z-10">
+  <div class="h-20 w-full bg-neutral-100 md:hidden" v-if="homePage" />
+  <div
+    class="h-20 shadow-2xl w-full bg-neutral-100 z-10"
+    :class="homePage ? 'fixed md:relative top-0 left-0' : 'relative'"
+  >
     <WrapperComponent>
       <div class="flex items-center h-20 justify-between w-full">
         <a href="/" class="font-bold md:text-2xl text-xl uppercase"
@@ -57,9 +61,6 @@
 import { onMounted, ref, watchEffect } from "vue";
 import { useRoute, useRouter } from "vue-router";
 
-const router = useRouter();
-const route = useRoute();
-
 import {
   LoginForm,
   WrapperComponent,
@@ -80,7 +81,18 @@ const successModalText = ref("");
 
 const emailSentText = ref("");
 
+const homePage = ref(false);
+
 const user = useUserStore();
+
+const router = useRouter();
+const route = useRoute();
+
+watchEffect(() => {
+  if (route.name === "home") {
+    homePage.value = true;
+  }
+});
 
 const changeModal = (modal, text = "") => {
   whichModalOpen.value = modal;
