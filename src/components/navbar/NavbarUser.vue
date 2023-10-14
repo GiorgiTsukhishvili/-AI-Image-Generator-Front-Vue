@@ -1,6 +1,6 @@
 <template>
   <div class="relative">
-    <div class="flex items-center gap-20">
+    <div class="flex items-center gap-16">
       <UserNotification />
 
       <img
