@@ -1,11 +1,15 @@
 <template>
   <div class="relative">
-    <img
-      :src="props.userInfo.user.image"
-      :alt="props.userInfo.user.name + ' image'"
-      class="w-16 h-16 rounded-full cursor-pointer"
-      @click="() => (dropdown = true)"
-    />
+    <div class="flex items-center gap-20">
+      <UserNotification />
+
+      <img
+        :src="props.userInfo.user.image"
+        :alt="props.userInfo.user.name + ' image'"
+        class="w-16 h-16 rounded-full cursor-pointer"
+        @click="() => (dropdown = true)"
+      />
+    </div>
 
     <div
       class="md:w-[300px] gap-5 flex flex-col md:justify-start justify-center md:items-start items-center md:h-auto h-screen w-screen rounded-md z-50 px-6 py-6 bg-white md:absolute fixed duration-500 origin-top md:top-24 top-0 shadow-xl right-0"
@@ -54,7 +58,7 @@ import { useRoute, useRouter } from "vue-router";
 
 import { logoutUser, getCSRF } from "@/services";
 
-import { LogoutIcon, CloseIcon } from "@/components";
+import { LogoutIcon, CloseIcon, UserNotification } from "@/components";
 
 const props = defineProps({ userInfo: { required: true } });
 
