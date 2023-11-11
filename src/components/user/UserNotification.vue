@@ -20,10 +20,24 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 
 import { NotificationIcon } from "@/components";
+import { getAllNotifications } from "@/services";
 
 const isNotificationOpen = ref(false);
-const notificationNumber = ref(1);
+const notificationNumber = ref(0);
+
+const notifications = ref([]);
+
+const getNotifications = async () => {
+  const data = await getAllNotifications();
+
+  notifications.value = data.data;
+  notificationNumber.value = data.data.filter(
+    (notification) => notification.is_new
+  ).length;
+};
+
+onMounted(() => getNotifications());
 </script>

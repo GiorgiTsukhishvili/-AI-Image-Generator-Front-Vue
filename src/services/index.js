@@ -7,3 +7,4 @@ export * from "./getTags";
 export * from "./like";
 export * from "./comment";
 export * from "./subscribe";
+export * from "./notifications";
