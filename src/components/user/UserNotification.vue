@@ -61,6 +61,9 @@
             }}
           </RouterLink>
         </div>
+        <p v-if="notification.is_new" class="text-lg mt-2 text-green-600">
+          New
+        </p>
       </div>
     </div>
   </div>
