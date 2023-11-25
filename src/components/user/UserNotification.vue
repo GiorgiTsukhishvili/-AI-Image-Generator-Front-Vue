@@ -21,6 +21,7 @@
       v-for="notification in notifications"
       :key="notification.id"
       class="flex gap-5 items-center justify-start"
+      @click="() => markRead(notification.id)"
     >
       <img
         :src="notification.creator.image"
@@ -73,13 +74,16 @@
 import { onMounted, ref } from "vue";
 
 import { NotificationIcon } from "@/components";
-import { getAllNotifications } from "@/services";
+import { getAllNotifications, markNotificationRead } from "@/services";
 import { RouterLink } from "vue-router";
+import { useUserStore } from "@/stores";
 
 const isNotificationOpen = ref(false);
 const notificationNumber = ref(0);
 
 const notifications = ref([]);
+
+const userInfo = useUserStore();
 
 const getNotifications = async () => {
   const data = await getAllNotifications();
@@ -88,8 +92,22 @@ const getNotifications = async () => {
   notificationNumber.value = data.data.filter(
     (notification) => notification.is_new
   ).length;
+};
 
-  console.log(data.data);
+const markRead = async (id) => {
+  if (!notifications.value.find((el) => el.id === id).is_new) return;
+
+  try {
+    await markNotificationRead([id], userInfo.user.id);
+
+    notifications.value = notifications.value.map((el) =>
+      el.id === id ? { ...el, is_new: false } : el
+    );
+
+    notificationNumber.value -= 1;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 onMounted(() => getNotifications());
