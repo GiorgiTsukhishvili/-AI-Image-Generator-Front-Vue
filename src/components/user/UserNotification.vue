@@ -18,6 +18,12 @@
     @mouseleave="() => (isNotificationOpen = false)"
   >
     <div
+      v-if="notificationNumber !== 0"
+      class="px-4 flex items-center justify-end w-full"
+    >
+      <button>Mark all read</button>
+    </div>
+    <div
       v-for="notification in notifications"
       :key="notification.id"
       class="flex gap-5 items-center justify-start"
