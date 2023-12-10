@@ -20,6 +20,7 @@
     <div
       v-if="notificationNumber !== 0"
       class="px-4 flex items-center justify-end w-full"
+      @click="markAllNotifications"
     >
       <button>Mark all read</button>
     </div>
@@ -111,6 +112,23 @@ const markRead = async (id) => {
     );
 
     notificationNumber.value -= 1;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const markAllNotifications = async () => {
+  const ids = notifications.value.filter((el) => el.is_new).map((el) => el.id);
+
+  try {
+    await markNotificationRead(ids, userInfo.user.id);
+
+    notifications.value = notifications.value.map((el) => ({
+      ...el,
+      is_new: false,
+    }));
+
+    notificationNumber.value = 0;
   } catch (err) {
     console.log(err);
   }
