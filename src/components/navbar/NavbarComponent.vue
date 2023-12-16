@@ -12,14 +12,14 @@
         <div>
           <div class="flex items-center gap-4" v-if="user.user === null">
             <button
-              class="bg-none text-blue-600 border border-blue-600 rounded-md text-lg font-bold px-4 py-1"
+              class="bg-none text-blue-600 border hover:bg-blue-600 hover:text-white duration-300 border-blue-600 rounded-md text-lg font-bold px-4 py-1"
               @click="() => changeModal('login')"
             >
               Login
             </button>
             <button
               @click="() => changeModal('register')"
-              class="text-white bg-blue-600 border border-blue-600 rounded-md text-lg font-bold px-4 py-1"
+              class="text-white bg-blue-600 border hover:bg-white hover:text-blue-600 duration-300 border-blue-600 rounded-md text-lg font-bold px-4 py-1"
             >
               Sign Up
             </button>
