@@ -1,7 +1,7 @@
 <template>
   <li
     :style="randColor()"
-    class="px-4 py-2 rounded-md flex justify-center items-center z-[3] relative"
+    class="px-4 py-2 rounded-md flex justify-center items-center z-[3] relative cursor-pointer"
     @click="changeLink"
   >
     {{ props.name }}
