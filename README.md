@@ -32,6 +32,7 @@ Image Echoes Back is app where users can share images from your life. You can su
 - <img src="readme/assets/pinia.svg" height="18" style="position: relative; top: 4px; width: 18px" /> [Pinia ^2.0.36](https://pinia.vuejs.org/) - For global state management.
 - <img src="readme/assets/axios.svg" height="18" style="position: relative; top: 4px; width: 18px" /> [axios @1.2.2](https://axios-http.com/) - Promise based HTTP client for the browser and node.js.
 - <img src="readme/assets/tailwind.png" height="18" style="position: relative; top: 4px; width: 18px" /> [Tailwind @3.2.4](https://tailwindcss.com/) - Tailwind CSS is an open source CSS framework.
+- <img src="readme/assets/echo.svg" height="18" style="position: relative; top: 4px; width: 18px" /> [Laravel Echo ^1.15.3](https://github.com/laravel/echo) - Library for beautiful Pusher and Ably integration.
 
 #
 
