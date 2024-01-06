@@ -78,7 +78,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 
 import { NotificationIcon } from "@/components";
 import { getAllNotifications, markNotificationRead } from "@/services";
@@ -135,4 +135,17 @@ const markAllNotifications = async () => {
 };
 
 onMounted(() => getNotifications());
+
+watchEffect(userInfo.user.id, () => {
+  PushManager();
+
+  if (userInfo.user.id) {
+    window.Echo.private(`epic-movies.${userInfo.user.id}`).listen(
+      ".notifications",
+      (notification) => {
+        console.log(notification);
+      }
+    );
+  }
+});
 </script>
