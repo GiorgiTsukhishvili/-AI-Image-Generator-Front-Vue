@@ -140,7 +140,7 @@ watchEffect(userInfo.user.id, () => {
   PushManager();
 
   if (userInfo.user.id) {
-    window.Echo.private(`epic-movies.${userInfo.user.id}`).listen(
+    window.Echo.private(`image-notifications.${userInfo.user.id}`).listen(
       ".notifications",
       (notification) => {
         console.log(notification);
