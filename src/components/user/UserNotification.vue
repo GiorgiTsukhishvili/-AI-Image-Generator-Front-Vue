@@ -143,7 +143,7 @@ watchEffect(userInfo.user.id, () => {
     window.Echo.private(`image-notifications.${userInfo.user.id}`).listen(
       ".notifications",
       (notification) => {
-        console.log(notification);
+        notifications.value.unshift(notification);
       }
     );
   }
